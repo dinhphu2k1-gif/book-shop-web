@@ -365,4 +365,4 @@ export const searchTextSubmit = () => async (dispatch, getState) => {
     }
     dispatch(setBook(res.data.data))
     dispatch(setTotalPage(res.data.totalPage))
-} 
+}
