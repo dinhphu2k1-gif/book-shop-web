@@ -21,8 +21,14 @@ exports.setUser = (user) => {
     localStorage.setItem("user", JSON.stringify(user))
 }
 exports.getUser = () => {
-    if(localStorage.getItem('user') === null)
+    if(localStorage.getItem('user') === "undefined"){
         return null
+    }
+
+    if(localStorage.getItem('user') === null){
+        return null
+    }
+        
     return JSON.parse(localStorage.getItem('user'))
 }
 exports.clear = () => {
