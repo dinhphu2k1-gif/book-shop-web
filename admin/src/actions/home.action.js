@@ -7,7 +7,7 @@ export const setTopProduct = (data) => ({
 export const getTopProduct = () => async (dispatch, getState) => {
     let res = null
     try {
-        res = await axios.post('http://localhost:8080/bill/top/')
+        res = await axios.post('http://localhost:8180/bill/top/')
     }
     catch(err) {
         console.log(err)

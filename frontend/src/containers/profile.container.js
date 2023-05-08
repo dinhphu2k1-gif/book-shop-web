@@ -42,7 +42,7 @@ class ProfileContainer extends Component {
   updatePassword = async (oldpassword, newpassword) => {
     let res = null;
     try {
-      res = await axios.post("http://localhost:8080/user/updatepassword", {
+      res = await axios.post("http://localhost:8180/user/updatepassword", {
         email: storeConfig.getUser().email,
         oldpassword: oldpassword,
         newpassword: newpassword

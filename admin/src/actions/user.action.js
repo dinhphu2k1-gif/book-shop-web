@@ -8,7 +8,7 @@ export const setUser = (data) => ({
 export const getUser = () => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.get('http://localhost:8080/admin/getAllUser/' + getState().userReducers.user.page)
+        res = await axios.get('http://localhost:8180/admin/getAllUser/' + getState().userReducers.user.page)
     }
     catch (err) {
         console.log(err)
@@ -43,7 +43,7 @@ export const backPage = () => (dispatch, getState) => {
 export const deleteUser = (email) => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.post('http://localhost:8080/admin/deleteuser/',{
+        res = await axios.post('http://localhost:8180/admin/deleteuser/',{
             email: email
         })
     }
@@ -72,7 +72,7 @@ export const addUser = (email, password, firstName , lastName, address, phone_nu
     dispatch(resetUser())
     let res
     try {
-        res = await axios.post('http://localhost:8080/admin/adduser', {
+        res = await axios.post('http://localhost:8180/admin/adduser', {
             email: email,
             firstName: firstName,
             lastName: lastName,
@@ -93,7 +93,7 @@ export const addUser = (email, password, firstName , lastName, address, phone_nu
 export const updateUser = (email, firstName, lastName, address, phone_number, is_admin) => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.post('http://localhost:8080/admin/updateuser', {
+        res = await axios.post('http://localhost:8180/admin/updateuser', {
             email: email,
             firstName: firstName,
             lastName: lastName,
@@ -133,7 +133,7 @@ export const auth = () => async (dispatch, getState)  => {
     console.log(email)
     let res
     try {
-        res = await axios.post('http://localhost:8080/auth', {
+        res = await axios.post('http://localhost:8180/auth', {
             email: email,
             token: token,
         })

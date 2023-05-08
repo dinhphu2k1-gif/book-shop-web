@@ -29,7 +29,7 @@ class StatisticalContainer extends Component {
     let res = null;
     try {
       res = await axios.post(
-        "http://localhost:8080/bill/statistical/revenue/day",
+        "http://localhost:8180/bill/statistical/revenue/day",
         {
           day: date[2],
           month: date[1],
@@ -47,7 +47,7 @@ class StatisticalContainer extends Component {
     let res = null;
     try {
       res = await axios.post(
-        "http://localhost:8080/bill/statistical/revenue/month",
+        "http://localhost:8180/bill/statistical/revenue/month",
         {
           month: date[1],
           year: date[0]
@@ -63,7 +63,7 @@ class StatisticalContainer extends Component {
     let res = null;
     try {
       res = await axios.post(
-        "http://localhost:8080/bill/statistical/revenue/year",
+        "http://localhost:8180/bill/statistical/revenue/year",
         {
           year: year
         }
@@ -78,7 +78,7 @@ class StatisticalContainer extends Component {
     let res = null;
     try {
       res = await axios.post(
-        "http://localhost:8080/bill/statistical/revenue/quauter",
+        "http://localhost:8180/bill/statistical/revenue/quauter",
         {
           year: year,
           quauter: quauter

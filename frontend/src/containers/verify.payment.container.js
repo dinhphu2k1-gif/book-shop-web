@@ -11,7 +11,7 @@ class VerifyPaymentContainer extends Component {
     }
     async componentWillMount() {
         try {
-            await axios.get('http://localhost:8080/bill/verify/' + this.props.match.params.token)
+            await axios.get('http://localhost:8180/bill/verify/' + this.props.match.params.token)
         }
         catch(err) {
             console.log(err)

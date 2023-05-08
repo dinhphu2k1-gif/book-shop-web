@@ -83,7 +83,7 @@ class LoginRegisterContainer extends Component {
             this.setState({ notificationRegister: '' })
         }
         try {
-            await axios.post('http://localhost:8080/user/register', {
+            await axios.post('http://localhost:8180/user/register', {
                 email: this.state.email,
                 password: this.state.password,
                 firstName: this.state.firstname,
@@ -111,7 +111,7 @@ class LoginRegisterContainer extends Component {
         }
         let res
         try {
-            res = await axios.post('http://localhost:8080/user/login', {
+            res = await axios.post('http://localhost:8180/user/login', {
                 email: this.state.emailLogin,
                 password: this.state.passwordLogin,
             })

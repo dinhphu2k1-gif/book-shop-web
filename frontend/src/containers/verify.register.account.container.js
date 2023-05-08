@@ -11,7 +11,7 @@ class VerifyRegisterAccountContainer extends Component {
     }
     async componentWillMount() {
         try {
-           await axios.get('http://localhost:8080/user/verify/' + this.props.match.params.token)
+           await axios.get('http://localhost:8180/user/verify/' + this.props.match.params.token)
         }
         catch(err) {
             this.setState({isconfirm: false})

@@ -49,7 +49,7 @@ exports.addBook = async (req, res, next) => {
   } = req.body;
 
   // console.log("file: ", req.file);
-  let urlImg = "http:/localhost:8080/" + req.file.filename;
+  let urlImg = "http://localhost:8180/" + req.file.filename;
 
   // // await uploadImg(req.file.path);
   // // if (urlImg === false) {
