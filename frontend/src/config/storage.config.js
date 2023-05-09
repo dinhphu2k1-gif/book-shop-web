@@ -21,7 +21,7 @@ exports.setUser = (user) => {
     localStorage.setItem('user', JSON.stringify(user))
 }
 exports.getUser = () => {
-    console.log("user", localStorage)
+    // console.log("user", localStorage)
     if (localStorage.getItem('user') === undefined) {
         return null
     }
@@ -35,6 +35,16 @@ exports.getUser = () => {
 
     return JSON.parse(localStorage.getItem('user'))
 }
+exports.getUserId = () => {
+    let user = this.getUser();
+    if (user == null) {
+        return null
+    }
+
+    // console.log("user", user)
+    return user.id
+}
+
 exports.clear = () => {
     localStorage.clear()
 }

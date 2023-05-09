@@ -2,6 +2,50 @@
 # yarn lockfile v1
 
 
+"@snowplow/browser-plugin-browser-features@^3.9.0":
+  "integrity" "sha512-UXuddw7X/UpAG9By0dxQU8jcfwQqP+L/dSzxNxYjPFfzSUcLslqTxm8n1j7vei/tQlz4H8XL4oE5OdVR4x8kQw=="
+  "resolved" "https://registry.npmjs.org/@snowplow/browser-plugin-browser-features/-/browser-plugin-browser-features-3.9.0.tgz"
+  "version" "3.9.0"
+  dependencies:
+    "@snowplow/browser-tracker-core" "3.9.0"
+    "tslib" "^2.3.1"
+
+"@snowplow/browser-plugin-link-click-tracking@^3.9.0":
+  "integrity" "sha512-u5OxO6s2YNw/H4Rq2zpXQQiRfb0cj6KmUoRVeVqLLxgcWoMOV2QH+yzAydQLhI4HwQDgBh+wEL+gLa/vVJGe0Q=="
+  "resolved" "https://registry.npmjs.org/@snowplow/browser-plugin-link-click-tracking/-/browser-plugin-link-click-tracking-3.9.0.tgz"
+  "version" "3.9.0"
+  dependencies:
+    "@snowplow/browser-tracker-core" "3.9.0"
+    "@snowplow/tracker-core" "3.9.0"
+    "tslib" "^2.3.1"
+
+"@snowplow/browser-tracker-core@3.9.0":
+  "integrity" "sha512-jLije/t8Ce4g85bFLDOyjF8GJ5n1DdP0pAoe8X0I4y3ke2jcegvNmM/xPQeePKFN7Pp30+6NZWUPzsC01DjyWw=="
+  "resolved" "https://registry.npmjs.org/@snowplow/browser-tracker-core/-/browser-tracker-core-3.9.0.tgz"
+  "version" "3.9.0"
+  dependencies:
+    "@snowplow/tracker-core" "3.9.0"
+    "sha1" "^1.1.1"
+    "tslib" "^2.3.1"
+    "uuid" "^3.4.0"
+
+"@snowplow/browser-tracker@^3.9.0", "@snowplow/browser-tracker@~3.9.0":
+  "integrity" "sha512-rP+/duNSRg26rrgmDWRECzPR4sMfo9N4OQnYb3mphAgPtuOdcKU3E41Aj3qN+fzfa/DSjFZEQmSqD6xN55VR8A=="
+  "resolved" "https://registry.npmjs.org/@snowplow/browser-tracker/-/browser-tracker-3.9.0.tgz"
+  "version" "3.9.0"
+  dependencies:
+    "@snowplow/browser-tracker-core" "3.9.0"
+    "@snowplow/tracker-core" "3.9.0"
+    "tslib" "^2.3.1"
+
+"@snowplow/tracker-core@3.9.0":
+  "integrity" "sha512-6JcroVk5r2i3r4QQPQ1zd7zhixP6/fSupkjV0AeSNvLbbVv/k4UxeoM2m57zJdsaBaGZDEKJqgmYTRkHJUGFKg=="
+  "resolved" "https://registry.npmjs.org/@snowplow/tracker-core/-/tracker-core-3.9.0.tgz"
+  "version" "3.9.0"
+  dependencies:
+    "tslib" "^2.3.1"
+    "uuid" "^3.4.0"
+
 "abab@^1.0.3":
   "integrity" "sha1-X6rZwsB/YN12dw9xzwJbYqY8/U4="
   "resolved" "https://registry.npmjs.org/abab/-/abab-1.0.4.tgz"
@@ -1596,6 +1640,11 @@
   "resolved" "https://registry.npmjs.org/chardet/-/chardet-0.4.2.tgz"
   "version" "0.4.2"
 
+"charenc@>= 0.0.1":
+  "integrity" "sha512-yrLQ/yVUFXkzg7EDQsPieE/53+0RlaWTs+wBrvW36cyilJ2SaDWfl4Yj7MtLTXleV9uEKefbAGUPv2/iWSooRA=="
+  "resolved" "https://registry.npmjs.org/charenc/-/charenc-0.0.2.tgz"
+  "version" "0.0.2"
+
 "chokidar@^1.6.0":
   "integrity" "sha1-eY5ol3gVHIB2tLNg5e3SjNortGg="
   "resolved" "https://registry.npmjs.org/chokidar/-/chokidar-1.7.0.tgz"
@@ -1995,6 +2044,11 @@
     "lru-cache" "^4.0.1"
     "shebang-command" "^1.2.0"
     "which" "^1.2.9"
+
+"crypt@>= 0.0.1":
+  "integrity" "sha512-mCxBlsHFYh9C+HVpiEacem8FEBnMXgU9gy4zmNC+SXAZNB/1idgp/aulFJ4FgCi7GPEVbfyng092GqL2k2rmow=="
+  "resolved" "https://registry.npmjs.org/crypt/-/crypt-0.0.2.tgz"
+  "version" "0.0.2"
 
 "cryptiles@3.x.x":
   "integrity" "sha1-qJ+7Ig9c4l7FboxKqKT9e1sNKf4="
@@ -7263,6 +7317,14 @@
     "inherits" "^2.0.1"
     "safe-buffer" "^5.0.1"
 
+"sha1@^1.1.1":
+  "integrity" "sha512-dZBS6OrMjtgVkopB1Gmo4RQCDKiZsqcpAQpkV/aaj+FCrCg8r4I4qMkDPQjBgLIxlmu9k4nUbWq6ohXahOneYA=="
+  "resolved" "https://registry.npmjs.org/sha1/-/sha1-1.1.1.tgz"
+  "version" "1.1.1"
+  dependencies:
+    "charenc" ">= 0.0.1"
+    "crypt" ">= 0.0.1"
+
 "shebang-command@^1.2.0":
   "integrity" "sha1-RKrGW2lbAzmJaMOfNj/uXer98eo="
   "resolved" "https://registry.npmjs.org/shebang-command/-/shebang-command-1.2.0.tgz"
@@ -7883,6 +7945,11 @@
   "resolved" "https://registry.npmjs.org/trim-right/-/trim-right-1.0.1.tgz"
   "version" "1.0.1"
 
+"tslib@^2.3.1":
+  "integrity" "sha512-336iVw3rtn2BUK7ORdIAHTyxHGRIHVReokCR3XjbckJMK7ms8FysBfhLR8IXnAgy7T0PTPNBWKiH514FOW/WSg=="
+  "resolved" "https://registry.npmjs.org/tslib/-/tslib-2.5.0.tgz"
+  "version" "2.5.0"
+
 "tty-browserify@0.0.0":
   "integrity" "sha1-oVe6QC2iTpv5V/mqadUk7tQpAaY="
   "resolved" "https://registry.npmjs.org/tty-browserify/-/tty-browserify-0.0.0.tgz"
@@ -8153,10 +8220,10 @@
   "resolved" "https://registry.npmjs.org/uuid/-/uuid-2.0.3.tgz"
   "version" "2.0.3"
 
-"uuid@^3.1.0":
-  "integrity" "sha512-jZnMwlb9Iku/O3smGWvZhauCf6cvvpKi4BKRiliS3cxnI+Gz9j5MEpTz2UFuXiKPJocb7gnsLHwiS05ige5BEA=="
-  "resolved" "https://registry.npmjs.org/uuid/-/uuid-3.2.1.tgz"
-  "version" "3.2.1"
+"uuid@^3.1.0", "uuid@^3.4.0":
+  "integrity" "sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A=="
+  "resolved" "https://registry.npmjs.org/uuid/-/uuid-3.4.0.tgz"
+  "version" "3.4.0"
 
 "validate-npm-package-license@^3.0.1":
   "integrity" "sha512-63ZOUnL4SIXj4L0NixR3L1lcjO38crAbgrTpl28t8jjrfuiOBL5Iygm+60qPs/KsZGzPNg6Smnc/oY16QTjF0g=="

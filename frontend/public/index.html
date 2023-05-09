@@ -18,7 +18,45 @@
   <link href="/assets/css/animate.css" rel="stylesheet">
   <link href="/assets/css/main.css" rel="stylesheet">
   <link href="/assets/css/responsive.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
+    integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog=="
+    crossorigin="anonymous" />
+
+  <!-- <script type="text/javascript" async=1>
+
+    ; (function (p, l, o, w, i, n, g) {
+      if (!p[i]) {
+        p.GlobalSnowplowNamespace = p.GlobalSnowplowNamespace || [];
+        p.GlobalSnowplowNamespace.push(i); p[i] = function () {
+          (p[i].q = p[i].q || []).push(arguments)
+        }; p[i].q = p[i].q || []; n = l.createElement(o); g = l.getElementsByTagName(o)[0]; n.async = 1;
+        n.src = w; g.parentNode.insertBefore(n, g)
+      }
+    }(
+      window,
+      document,
+      "script",
+      "https://201d8e7c-f1d0-4a95-b395-b27e7fc2d4a1.app.try-snowplow.com/v3/try.js",
+      "snowplow")
+    );
+
+
+    snowplow("newTracker", "book-shop-tracker", "https://201d8e7c-f1d0-4a95-b395-b27e7fc2d4a1.app.try-snowplow.com", {
+      appId: "book-shop", // you can specify your own app name here
+      platform: "web",
+
+      contexts: {
+        webPage: true, // this sets a unique id for each page view
+        performanceTiming: true // this captures performance metrics like load times
+      }
+    });
+
+    // send first heartbeat after 10 seconds, and every 10 seconds thereafter
+    snowplow("enableActivityTracking", { minimumVisitLength: 600, heartbeatDelay: 10 });
+    snowplow("enableLinkClickTracking");
+    snowplow("trackPageView");
+  </script> -->
+
 
 </head>
 
