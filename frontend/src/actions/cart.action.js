@@ -1,7 +1,8 @@
 import { cartTypes } from '../constants/action.types'
 import axios from 'axios'
 import storeConfig from '../config/storage.config'
-import { PORT_BACKEND } from '../config/application.config'
+import { BACKEND_PORT } from '../config/application.config'
+
 export const setCart = (data) => ({
     type: cartTypes.SET_CART,
     data
@@ -17,7 +18,7 @@ export const getCart = () => async (dispatch, getState) => {
         return
     let id_user = storeConfig.getUser().id
     try {
-        cart = await axios.get('http://localhost:' + PORT_BACKEND + '/cart/' + id_user)
+        cart = await axios.get(`http://localhost:${BACKEND_PORT}/cart/` + id_user)
     }
     catch (err) {
         console.log(err)
@@ -34,7 +35,7 @@ export const updateProductInCart = (product) => async (dispatch, getState) => {
     }
     else {
         try {
-            await axios.post('http://localhost:8180/cart/update', {
+            await axios.post(`http://localhost:${BACKEND_PORT}/cart/update`, {
                 id_user: storeConfig.getUser().id,
                 product: product
             })
@@ -50,7 +51,7 @@ export const deteleProductInCart = (id_product) => async (dispatch, getState) =>
         storeConfig.deteleProductInCart(id_product)
     } else {
         try {
-            await axios.post('http://localhost:8180/cart/delete', {
+            await axios.post(`http://localhost:${BACKEND_PORT}/cart/delete`, {
                 id_user: storeConfig.getUser().id,
                 id_product: id_product
             })
@@ -79,7 +80,7 @@ export const payment = (address, phone, name, total) => async (dispatch, getStat
         console.log(address)
         console.log(phone);
         console.log(name)
-        res = await axios.post('http://localhost:8180/bill/add', {
+        res = await axios.post(`http://localhost:${BACKEND_PORT}/bill/add`, {
             id_user: storeConfig.getUser().id,
             address: address,
             phone: phone,

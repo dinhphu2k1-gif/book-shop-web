@@ -3,7 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@snowplow/browser-plugin-browser-features": "^3.9.0",
+    "@snowplow/browser-plugin-link-click-tracking": "^3.9.0",
+    "@snowplow/browser-tracker": "^3.9.0",
     "axios": "^0.17.1",
+    "dotenv": "^16.0.3",
     "lodash": "^4.17.10",
     "react": "^17.0.0-rc.0",
     "react-bootstrap": "^0.32.1",

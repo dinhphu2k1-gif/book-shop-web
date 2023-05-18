@@ -6,6 +6,7 @@ import NavbarContainer from "./navbar.container";
 import Slider from "./slider.container";
 import * as userActions from "../actions/user.action";
 import Statistical from "../components/statistical/statistical";
+import { BACKEND_PORT } from "../config/application.config";
 class StatisticalContainer extends Component {
   constructor() {
     super();
@@ -29,7 +30,7 @@ class StatisticalContainer extends Component {
     let res = null;
     try {
       res = await axios.post(
-        "http://localhost:8180/bill/statistical/revenue/day",
+        `http://localhost:${BACKEND_PORT}/bill/statistical/revenue/day`,
         {
           day: date[2],
           month: date[1],
@@ -47,7 +48,7 @@ class StatisticalContainer extends Component {
     let res = null;
     try {
       res = await axios.post(
-        "http://localhost:8180/bill/statistical/revenue/month",
+        `http://localhost:${BACKEND_PORT}/bill/statistical/revenue/month`,
         {
           month: date[1],
           year: date[0]
@@ -63,7 +64,7 @@ class StatisticalContainer extends Component {
     let res = null;
     try {
       res = await axios.post(
-        "http://localhost:8180/bill/statistical/revenue/year",
+        `http://localhost:${BACKEND_PORT}/bill/statistical/revenue/year`,
         {
           year: year
         }
@@ -78,7 +79,7 @@ class StatisticalContainer extends Component {
     let res = null;
     try {
       res = await axios.post(
-        "http://localhost:8180/bill/statistical/revenue/quauter",
+        `http://localhost:${BACKEND_PORT}/bill/statistical/revenue/quauter`,
         {
           year: year,
           quauter: quauter

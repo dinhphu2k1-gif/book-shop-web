@@ -1,4 +1,6 @@
 'use strict'
+require('dotenv').config();
+const port = process.env.PORT;
 const book = require('../models/book.model');
 const publisherController = require('./publisher.controller');
 const authorController = require('./author.controller');

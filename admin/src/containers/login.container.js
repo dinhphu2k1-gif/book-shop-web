@@ -5,6 +5,8 @@ import { bindActionCreators } from "redux";
 import * as userActions from "../actions/user.action";
 import Login from "../components/login/login";
 import  { Redirect } from 'react-router-dom'
+import { BACKEND_PORT } from "../config/application.config";
+
 class LoginContainer extends Component {
   constructor(props) {
     super(props);
@@ -21,7 +23,7 @@ class LoginContainer extends Component {
     }
     let res;
     try {
-      res = await axios.post("http://localhost:8180/admin/login", {
+      res = await axios.post(`http://localhost:${BACKEND_PORT}/admin/login`, {
         email: email,
         password: password
       });

@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { userTypes } from '../constants/action.types'
 import storeConfig from '../config/store.config'
+import { BACKEND_PORT } from '../config/application.config'
+
 export const setUser = (data) => ({
     type: userTypes.SET_USER,
     data
@@ -8,7 +10,7 @@ export const setUser = (data) => ({
 export const getUser = () => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.get('http://localhost:8180/admin/getAllUser/' + getState().userReducers.user.page)
+        res = await axios.get(`http://localhost:${BACKEND_PORT}/admin/getAllUser/` + getState().userReducers.user.page)
     }
     catch (err) {
         console.log(err)
@@ -29,13 +31,13 @@ export const setPage = (page) => ({
 export const nextPage = () => (dispatch, getState) => {
     let page = getState().userReducers.user.page
     let totalpage = getState().userReducers.user.totalpage
-    if(page < totalpage) {
+    if (page < totalpage) {
         dispatch(setPage(parseInt(page) + 1))
     }
 }
 export const backPage = () => (dispatch, getState) => {
     let page = getState().userReducers.user.page
-    if(page > 1) {
+    if (page > 1) {
         dispatch(setPage(parseInt(page) - 1))
     }
 }
@@ -43,7 +45,7 @@ export const backPage = () => (dispatch, getState) => {
 export const deleteUser = (email) => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.post('http://localhost:8180/admin/deleteuser/',{
+        res = await axios.post(`http://localhost:${BACKEND_PORT}/admin/deleteuser/`, {
             email: email
         })
     }
@@ -68,11 +70,11 @@ export const updateUserFail = () => ({
 export const resetUser = () => ({
     type: userTypes.RESET_USER
 })
-export const addUser = (email, password, firstName , lastName, address, phone_number, is_admin) => async (dispatch, getState) => {
+export const addUser = (email, password, firstName, lastName, address, phone_number, is_admin) => async (dispatch, getState) => {
     dispatch(resetUser())
     let res
     try {
-        res = await axios.post('http://localhost:8180/admin/adduser', {
+        res = await axios.post(`http://localhost:${BACKEND_PORT}/admin/adduser`, {
             email: email,
             firstName: firstName,
             lastName: lastName,
@@ -93,7 +95,7 @@ export const addUser = (email, password, firstName , lastName, address, phone_nu
 export const updateUser = (email, firstName, lastName, address, phone_number, is_admin) => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.post('http://localhost:8180/admin/updateuser', {
+        res = await axios.post(`http://localhost:${BACKEND_PORT}/admin/updateuser`, {
             email: email,
             firstName: firstName,
             lastName: lastName,
@@ -121,10 +123,10 @@ export const setLoginSuccess = () => ({
 })
 export const setLoginFail = () => ({
     type: userTypes.LOGIN_FAIL,
-    data: 'login fail'   
+    data: 'login fail'
 })
-export const auth = () => async (dispatch, getState)  => {
-    if(storeConfig.getUser() === null){
+export const auth = () => async (dispatch, getState) => {
+    if (storeConfig.getUser() === null) {
         dispatch(setLoginFail())
         return false
     }
@@ -133,7 +135,7 @@ export const auth = () => async (dispatch, getState)  => {
     console.log(email)
     let res
     try {
-        res = await axios.post('http://localhost:8180/auth', {
+        res = await axios.post(`http://localhost:${BACKEND_PORT}/auth`, {
             email: email,
             token: token,
         })

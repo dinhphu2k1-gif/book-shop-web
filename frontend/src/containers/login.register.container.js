@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux'
 import LoginRegister from '../components/login.register/login.register'
 import * as userActions from '../actions/user.action'
 import * as homeActions from '../actions/home.action'
+import { BACKEND_PORT } from '../config/application.config'
 class LoginRegisterContainer extends Component {
     constructor(props) {
         super(props)
@@ -83,7 +84,7 @@ class LoginRegisterContainer extends Component {
             this.setState({ notificationRegister: '' })
         }
         try {
-            await axios.post('http://localhost:8180/user/register', {
+            await axios.post(`http://localhost:${BACKEND_PORT}/user/register`, {
                 email: this.state.email,
                 password: this.state.password,
                 firstName: this.state.firstname,
@@ -111,7 +112,7 @@ class LoginRegisterContainer extends Component {
         }
         let res
         try {
-            res = await axios.post('http://localhost:8180/user/login', {
+            res = await axios.post(`http://localhost:${BACKEND_PORT}/user/login`, {
                 email: this.state.emailLogin,
                 password: this.state.passwordLogin,
             })

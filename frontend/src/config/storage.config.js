@@ -18,18 +18,38 @@ exports.getEmail = () => {
     return localStorage.getItem('email')
 }
 exports.setUser = (user) => {
-    localStorage.setItem("user", JSON.stringify(user))
+    localStorage.setItem('user', JSON.stringify(user))
 }
 exports.getUser = () => {
-    if(localStorage.getItem('user') === null)
+    // console.log("user", localStorage)
+    if (localStorage.getItem('user') === undefined) {
         return null
+    }
+    if (localStorage.getItem('user') === "undefined") {
+        return null
+    }
+
+    if (localStorage.getItem('user') === null) {
+        return null
+    }
+
     return JSON.parse(localStorage.getItem('user'))
 }
+exports.getUserId = () => {
+    let user = this.getUser();
+    if (user == null) {
+        return null
+    }
+
+    // console.log("user", user)
+    return user.id
+}
+
 exports.clear = () => {
     localStorage.clear()
 }
 exports.getCart = () => {
-    if(localStorage.getItem('cart') === null)
+    if (localStorage.getItem('cart') === null)
         return null
     return JSON.parse(localStorage.getItem('cart'))
 }
@@ -38,13 +58,13 @@ exports.removeCart = () => {
 }
 exports.addProductToCart = (product) => {
     let cart
-    if(localStorage.getItem('cart') !== null){
+    if (localStorage.getItem('cart') !== null) {
         cart = JSON.parse(localStorage.getItem('cart'))
     } else {
         cart = []
     }
     let index = cart.findIndex(element => product._id === element._id)
-    if(index === -1) {
+    if (index === -1) {
         cart = [...cart, product]
     } else {
         cart[index].count = parseInt(cart[index].count) + parseInt(product.count)
@@ -53,11 +73,11 @@ exports.addProductToCart = (product) => {
 }
 exports.updateProductInCart = (product) => {
     let cart = this.getCart()
-    if(cart === null) {
+    if (cart === null) {
         return false
     }
     let index = cart.findIndex(element => product._id === element._id)
-    if(index === -1) {
+    if (index === -1) {
         return false
     } else {
         cart[index].count = product.count
@@ -67,11 +87,11 @@ exports.updateProductInCart = (product) => {
 }
 exports.deteleProductInCart = (id_product) => {
     let cart = this.getCart()
-    if(cart === null) {
+    if (cart === null) {
         return false
     }
-    let index = cart.findIndex(element => id_product=== element._id)
-    if(index === -1) {
+    let index = cart.findIndex(element => id_product === element._id)
+    if (index === -1) {
         return false
     } else {
         cart.splice(index, 1)
