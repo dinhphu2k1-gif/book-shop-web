@@ -20,26 +20,25 @@ class HistoryPurchaseContainer extends Component {
     async trackingDeleteBill(id) {
         let bill = await this.props.purchaseHistoryActions.deleteBill(id)
 
-        if (bill != null) {
-            trackSelfDescribingEvent({
-                event: {
-                  schema: 'iglu:com.bookshop/delete_purchase/jsonschema/1-0-0',
-                  data: {
-                    order_id: bill._id,
-                    user_id: storeConfig.getUser().id,
-                    products: bill.products,
-                    address: bill.address,
-                    phone: bill.phone,
-                    name: bill.name,
-                    total: bill.total,
-                    date: bill.date
-                  }
-                }
-              })
+        // if (bill != null) {
+        //     trackSelfDescribingEvent({
+        //         event: {
+        //           schema: 'iglu:com.bookshop/delete_purchase/jsonschema/1-0-0',
+        //           data: {
+        //             order_id: bill._id,
+        //             user_id: storeConfig.getUser().id,
+        //             products: bill.products,
+        //             address: bill.address,
+        //             phone: bill.phone,
+        //             name: bill.name,
+        //             total: bill.total,
+        //             date: bill.date
+        //           }
+        //         }
+        //       })
 
-              console.log("bill delete", bill)
-        }
-        
+        //       console.log("bill delete", bill)
+        // }
         
     }
 
