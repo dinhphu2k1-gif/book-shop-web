@@ -4,6 +4,10 @@ import { bindActionCreators } from 'redux'
 import * as userActions from "../actions/user.action";
 import * as purchaseHistoryActions from '../actions/purchase.history.action'
 import HistoryPurchase from '../components/purchase.history/purchase.history'
+import storeConfig from "../config/storage.config"
+
+// snowplow tracking
+import { trackSelfDescribingEvent } from '@snowplow/browser-tracker';
 class HistoryPurchaseContainer extends Component {
     constructor(props) {
         super(props)
@@ -12,6 +16,33 @@ class HistoryPurchaseContainer extends Component {
         this.props.actions.auth()
         this.props.purchaseHistoryActions.getPurchaseHitory()
     }
+
+    async trackingDeleteBill(id) {
+        let bill = await this.props.purchaseHistoryActions.deleteBill(id)
+
+        if (bill != null) {
+            trackSelfDescribingEvent({
+                event: {
+                  schema: 'iglu:com.bookshop/delete_purchase/jsonschema/1-0-0',
+                  data: {
+                    order_id: bill._id,
+                    user_id: storeConfig.getUser().id,
+                    products: bill.products,
+                    address: bill.address,
+                    phone: bill.phone,
+                    name: bill.name,
+                    total: bill.total,
+                    date: bill.date
+                  }
+                }
+              })
+
+              console.log("bill delete", bill)
+        }
+        
+        
+    }
+
     render() {
         return (
             <div>
@@ -20,7 +51,7 @@ class HistoryPurchaseContainer extends Component {
                     logout={() => this.props.actions.logout()}
                     history={this.props.history}
                     purchaseHistory={this.props.purchaseHistory}
-                    deleteBill={(id) => this.props.purchaseHistoryActions.deleteBill(id)}
+                    deleteBill={(id) => this.trackingDeleteBill(id)}
                 />
             </div>
         )

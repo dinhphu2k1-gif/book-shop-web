@@ -76,10 +76,6 @@ export const resetPayment = () => ({
 export const payment = (address, phone, name, total) => async (dispatch, getState) => {
     let res = null
     try {
-        console.log(total);
-        console.log(address)
-        console.log(phone);
-        console.log(name)
         res = await axios.post(`http://localhost:${BACKEND_PORT}/bill/add`, {
             id_user: storeConfig.getUser().id,
             address: address,
@@ -98,4 +94,9 @@ export const payment = (address, phone, name, total) => async (dispatch, getStat
     dispatch(paymentSuccess())
     dispatch(resetPayment())
     dispatch(getCart())
+
+    if (res != null) {
+        return res.data.bill
+    }
+    return null
 }

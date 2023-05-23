@@ -302,6 +302,10 @@ export const branchClick = (branch, id) => async (dispatch, getState) => {
     dispatch(setTotalPage(res.data.totalPage))
 }
 
+export const getSearchText = () => (dispatch, getState) => {
+    return getState().homeReducers.book.searchtext;
+}
+
 export const searchTextSubmit = () => async (dispatch, getState) => {
     dispatch(setPage(1))
     let sorttype = 'release_date'

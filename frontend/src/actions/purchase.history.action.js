@@ -10,23 +10,26 @@ export const setPurchaseHistory = (data) => ({
 export const getPurchaseHitory = () => async (dispatch, getState) => {
     let res = null
     let user = storeConfig.getUser()
-    if(user === null) 
+    if (user === null)
         return
     try {
         res = await axios.get(`http://localhost:${BACKEND_PORT}/bill/` + user.id)
     }
-    catch(err) {
+    catch (err) {
         console.log(err)
         return
     }
     dispatch(setPurchaseHistory(res.data.data))
 }
 export const deleteBill = (id) => async (dispatch, getState) => {
+    let res = null;
     try {
-        await axios.get(`http://localhost:${BACKEND_PORT}/bill/delete/` + id)
+        res = await axios.get(`http://localhost:${BACKEND_PORT}/bill/delete/` + id)
     }
-    catch(err) {
+    catch (err) {
         console.log(err.response)
     }
     dispatch(getPurchaseHitory())
+
+    return res.data.bill;
 }
