@@ -39,13 +39,13 @@ class ProductDetailContainer extends Component {
     trackingAddProductToCart(product) {
         trackSelfDescribingEvent({
             event: {
-                schema: 'iglu:com.bookshop/product_action/jsonschema/1-1-0',
+                schema: 'iglu:com.bookshop/product_action/jsonschema/1-0-0',
                 data: {
                     action: "add"
                 }
             },
             context : [{
-                schema: "iglu:com.bookshop/product_context/jsonschema/1-1-0",
+                schema: "iglu:com.bookshop/product_context/jsonschema/1-0-0",
                 data: {
                     product_id: this.props.mproductDetail._id,
                     product_name: this.props.mproductDetail.name,

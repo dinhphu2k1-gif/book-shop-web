@@ -55,7 +55,7 @@ let address = storeConfig.getUser() == null ? null : storeConfig.getUser().addre
 
 // context
 let user_context = {
-    schema: "iglu:com.bookshop/user_context/jsonschema/1-1-2",
+    schema: "iglu:com.bookshop/user_context/jsonschema/1-0-0",
     data: {
         user_id: user_id,
         user_name: user_name,

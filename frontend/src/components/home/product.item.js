@@ -28,13 +28,13 @@ class ProductItem extends Component {
 
         trackSelfDescribingEvent({
             event: {
-                schema: 'iglu:com.bookshop/product_action/jsonschema/1-1-0',
+                schema: 'iglu:com.bookshop/product_action/jsonschema/1-0-0',
                 data: {
                     action: "view"
                 }
             },
             context : [{
-                schema: "iglu:com.bookshop/product_context/jsonschema/1-1-0",
+                schema: "iglu:com.bookshop/product_context/jsonschema/1-0-0",
                 data: {
                     product_id: book._id,
                     product_name: book.name,

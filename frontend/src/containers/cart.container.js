@@ -29,13 +29,13 @@ class CartContainer extends Component {
 
 			trackSelfDescribingEvent({
 				event: {
-					schema: 'iglu:com.bookshop/product_action/jsonschema/1-1-0',
+					schema: 'iglu:com.bookshop/product_action/jsonschema/1-0-0',
 					data: {
 						action: "purchase"
 					}
 				},
 				context: [{
-					schema: "iglu:com.bookshop/product_context/jsonschema/1-1-1",
+					schema: "iglu:com.bookshop/product_context/jsonschema/1-0-0",
 					data: {
 						product_id: element._id,
 						product_name: element.name,
@@ -61,13 +61,13 @@ class CartContainer extends Component {
 
 		trackSelfDescribingEvent({
 			event: {
-				schema: 'iglu:com.bookshop/product_action/jsonschema/1-1-0',
+				schema: 'iglu:com.bookshop/product_action/jsonschema/1-0-0',
 				data: {
 					action: "remove"
 				}
 			},
 			context: [{
-				schema: "iglu:com.bookshop/product_context/jsonschema/1-1-1",
+				schema: "iglu:com.bookshop/product_context/jsonschema/1-0-0",
 				data: {
 					product_id: product._id,
 					product_name: product.name,
