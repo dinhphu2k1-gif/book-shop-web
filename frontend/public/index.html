@@ -36,12 +36,12 @@
       window,
       document,
       "script",
-      "https://201d8e7c-f1d0-4a95-b395-b27e7fc2d4a1.app.try-snowplow.com/v3/try.js",
+      "./sp.js",
       "snowplow")
     );
 
 
-    snowplow("newTracker", "book-shop-tracker", "https://201d8e7c-f1d0-4a95-b395-b27e7fc2d4a1.app.try-snowplow.com", {
+    snowplow("newTracker", "book-shop-tracker", "http://localhost:8080", {
       appId: "book-shop", // you can specify your own app name here
       platform: "web",
 

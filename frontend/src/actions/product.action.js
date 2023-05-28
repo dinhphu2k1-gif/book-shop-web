@@ -33,6 +33,7 @@ export const getNameCategoryByID = (id) => async (dispatch) => {
         return
     }
     dispatch(setNameCategory(res.data.name))
+    return res
 }
 export const getNamePubliserByID = (id) => async (dispatch) => {
     let res
@@ -44,6 +45,7 @@ export const getNamePubliserByID = (id) => async (dispatch) => {
     }
 
     dispatch(setNamePubliser(res.data.name))
+    return res
 }
 export const getNameAuthorByID = (id) => async (dispatch) => {
     let res
@@ -55,6 +57,7 @@ export const getNameAuthorByID = (id) => async (dispatch) => {
     }
 
     dispatch(setNameAuthor(res.data.name))
+    return res
 }
 export const setProductDetail = (productDetail) => ({
     type: productTypes.SET_PRODUCT_DETAIL,

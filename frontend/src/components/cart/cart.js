@@ -27,7 +27,7 @@ class Cart extends Component {
           updateProductInCart={product =>
             this.props.updateProductInCart(product)
           }
-          deteleProductInCart={(id_product) => this.props.deteleProductInCart(id_product)}
+          deteleProductInCart={(product) => this.props.deteleProductInCart(product)}
     
        
           payment={( address, phone, name,total) => 

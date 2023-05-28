@@ -57,7 +57,10 @@ exports.addBill = async (req, res) => {
     console.log("save bill fail");
     return;
   }
-  res.status(201).json({ msg: "success" });
+  res.status(201).json({ 
+    msg: "success",
+    bill: new_bill
+  });
 };
 
 exports.verifyPayment = async (req, res) => {
@@ -133,7 +136,10 @@ exports.deleteBill = async (req, res) => {
     res.status(500).json({ msg: "server found" });
     return;
   }
-  res.status(200).json({ msg: "success" });
+  res.status(200).json({ 
+    msg: "success",
+    bill: billFind
+   });
 };
 exports.statisticalTop10 = async (req, res) => {
   let billFind = null;

@@ -185,7 +185,7 @@ class ContentCart extends Component {
                           <a
                             className="cart_quantity_delete"
                             onClick={() =>
-                              this.props.deteleProductInCart(element._id)
+                              this.props.deteleProductInCart(element)
                             }
                           >
                             <i className="fa fa-times" />

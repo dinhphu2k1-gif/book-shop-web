@@ -6,6 +6,11 @@ import * as productActions from '../actions/product.action'
 import * as homeActions from '../actions/home.action'
 import * as userActions from '../actions/user.action'
 import Loading from '../components/loading/loading'
+import storeConfig from "../config/storage.config"
+
+// snowplow tracking
+import { trackSelfDescribingEvent } from '@snowplow/browser-tracker';
+
 class ProductDetailContainer extends Component {
     constructor(props) {
         super(props)
@@ -18,22 +23,75 @@ class ProductDetailContainer extends Component {
         this.props.productActions.getBookDetail(this.props.match.params.id)
         this.props.productActions.getBookRelated(this.props.match.params.id)
         this.props.productActions.getCommentByIDBook(this.props.match.params.id)
-        
+
     }
     componentWillReceiveProps(nextProps) {
-        if(nextProps.mproductDetail !== null ) {
+        if (nextProps.mproductDetail !== null) {
             this.props.productActions.getNameCategoryByID(nextProps.mproductDetail.id_category)
             this.props.productActions.getNamePubliserByID(nextProps.mproductDetail.id_nsx)
             this.props.productActions.getNameAuthorByID(nextProps.mproductDetail.id_author)
         }
-        if(nextProps.page !== this.props.page) {
+        if (nextProps.page !== this.props.page) {
             this.props.productActions.getCommentByIDBook(this.props.match.params.id)
         }
-
     }
-    
+
+    trackingAddProductToCart(product) {
+        trackSelfDescribingEvent({
+            event: {
+                schema: 'iglu:com.bookshop/product_action/jsonschema/1-0-0',
+                data: {
+                    action: "add"
+                }
+            },
+            context : [{
+                schema: "iglu:com.bookshop/product_context/jsonschema/1-0-0",
+                data: {
+                    product_id: this.props.mproductDetail._id,
+                    product_name: this.props.mproductDetail.name,
+                    quantity: parseInt(product.count),
+                    price: this.props.mproductDetail.price,
+                    category: this.props.nameCategory,
+                    publisher: this.props.namePublicsher,
+                    author: this.props.nameAuthor
+                }
+            }
+            ]
+        })
+
+        // add product to cart
+        this.props.productActions.addToCart(product)
+    }
+
+    trackingCommentProduct(name, email, comment, id_book) {
+        trackSelfDescribingEvent({
+            event: {
+                schema: 'iglu:com.bookshop/product_action/jsonschema/1-1-0',
+                data: {
+                    action: "comment",
+                    extra: comment
+                }
+            },
+            context : [{
+                schema: "iglu:com.bookshop/product_context/jsonschema/1-1-0",
+                data: {
+                    product_id: this.props.mproductDetail._id,
+                    product_name: this.props.mproductDetail.name,
+                    quantity: 0,
+                    price: this.props.mproductDetail.price,
+                    category: this.props.nameCategory,
+                    publisher: this.props.namePublicsher,
+                    author: this.props.nameAuthor
+                }
+            }
+            ]
+        })
+
+        this.props.productActions.submitComment(name, email, comment, id_book)
+    }
+
     render() {
-        if(this.props.mproductDetail && this.props.nameCategory && this.props.namePublicsher && this.props.nameAuthor) {
+        if (this.props.mproductDetail && this.props.nameCategory && this.props.namePublicsher && this.props.nameAuthor) {
             return (
                 <div>
                     <ProductDetail
@@ -50,10 +108,10 @@ class ProductDetailContainer extends Component {
                         bookrelated={this.props.bookrelated}
                         logout={() => this.props.actions.logout()}
                         id_book={this.props.match.params.id}
-                        submitComment={(name, email, comment, id_book) => this.props.productActions.submitComment(name, email, comment, id_book)}
+                        submitComment={(name, email, comment, id_book) => this.trackingCommentProduct(name, email, comment, id_book)}
                         comment={this.props.comment}
                         nameAuthor={this.props.nameAuthor}
-                        addToCart={(product) => this.props.productActions.addToCart(product)}
+                        addToCart={(product) => this.trackingAddProductToCart(product)}
                         totalpage={this.props.totalpage}
                         page={this.props.page}
                         backPage={() => this.props.productActions.backPage()}
@@ -66,10 +124,10 @@ class ProductDetailContainer extends Component {
         }
         else {
             return (
-                <Loading/>
+                <Loading />
             )
         }
-        
+
     }
 }
 

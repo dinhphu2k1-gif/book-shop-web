@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import { Router, Switch, Route } from 'react-router-dom'
 import HomeContainer from './home.container'
 import LoginRegisterContainer from './login.register.container'
 import VerifyRegisterAccountContainer from './verify.register.account.container'
@@ -9,8 +9,10 @@ import ProfileContainer from './profile.container'
 import CartContainer from './cart.container'
 import VerifyPaymentContainer from './verify.payment.container'
 import HistoryPurchase from './history.purchase.container'
+import history from '../history'
+
 const App = () => (
-  <Router>
+  <Router history={history}>
     <Switch>
       <Route exact path='/' component={HomeContainer} />
       <Route exact path='/login_register' component={LoginRegisterContainer} />
