@@ -13,8 +13,7 @@ class LoginRegisterContainer extends Component {
             emailLogin: '',
             passwordLogin: '',
             email: '',
-            firstname: '',
-            lastname: '',
+            username: '',
             address: '',
             phone: '',
             password: '',
@@ -27,13 +26,8 @@ class LoginRegisterContainer extends Component {
     componentWillMount() {
         this.props.actions.auth()
     }
-    isvalidFirstName = (firstName) => {
-        if(firstName === '')
-            return false
-        return true
-    }
-    isvalidLastName = (lastname) => {
-        if(lastname === '')
+    isvalidName = (username) => {
+        if(username === '')
             return false
         return true
     }
@@ -71,36 +65,40 @@ class LoginRegisterContainer extends Component {
         } else {
             this.setState({ notificationRegister: '' })
         }
-        if (!this.isvalidFirstName(this.state.firstname)) {
-            this.setState({ notificationRegister: 'Firstname invalid' })
+        if (!this.isvalidName(this.state.name)) {
+            this.setState({ notificationRegister: 'Name invalid' })
             return
         } else {
             this.setState({ notificationRegister: '' })
         }
-        if (!this.isvalidLastName(this.state.lastname)) {
-            this.setState({ notificationRegister: 'Lastname invalid' })
-            return
-        } else {
-            this.setState({ notificationRegister: '' })
-        }
-        try {
-            await axios.post(`http://localhost:${BACKEND_PORT}/user/register`, {
+        fetch("http://localhost:8180/user", {
+            method: 'POST',
+            headers: {
+                'accept': '*/*',
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Origin": "*",
+            },
+            body: JSON.stringify({ 
                 email: this.state.email,
                 password: this.state.password,
-                firstName: this.state.firstname,
-                lastName: this.state.lastname,
+                name: this.state.username,
                 address: this.state.address,
-                phone_number: this.state.phone
+                phoneNumber: this.state.phone }),
+            credentials: "same-origin",
+        })
+            .then(response => {
+                return response.json()
             })
-        }
-        catch (err) {
-            if (err.response.data.msg === "Email already exist")
-                this.setState({ notificationRegister: 'Email already exist' })
-            else
-                this.setState({ notificationRegister: 'Đăng Ký Thất Bại' })
-            return
-        }
-        this.setState({ notificationRegister: 'Đăng Ký Thành Công' })
+            .then(data => {
+                if (data.code === 200) {
+                    this.setState({ notificationRegister: 'Đăng Ký Thành Công' })
+                } else  {
+                    this.setState({notificationRegister: data.message})
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            })
     }
 
     loginSubmit = async () => {
@@ -141,8 +139,7 @@ class LoginRegisterContainer extends Component {
                     setEmailogin={(value) => this.setState({ emailLogin: value })}
                     setPasswordlogin={(value) => this.setState({ passwordLogin: value })}
                     setEmail={(value) => this.setState({ email: value })}
-                    setFirstname={(value) => this.setState({ firstname: value })}
-                    setLastname={(value) => this.setState({ lastname: value })}
+                    setUsername={(value) => this.setState({ username: value })}
                     setAddress={(value) => this.setState({ address: value })}
                     setPhone={(value) => this.setState({ phone: value })}
                     notificationRegister={this.state.notificationRegister}

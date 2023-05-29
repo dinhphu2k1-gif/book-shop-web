@@ -69,37 +69,71 @@ export const deleteBook = (id) => async(dispatch, getState) => {
 export const getCategory = () => async (dispatch, getState) =>  {
     let res
     try {
-        res = await axios.get(`http://localhost:${BACKEND_PORT}/category/all/` + getState().bookReducers.category.page)
+        res = await axios.get(`http://localhost:8180/category/` + getState().bookReducers.category.page)
+    }
+    catch (err) {
+        return
+    }
+    dispatch(setCategory(res.data.data.categories))
+    dispatch(categorySetTotalPage(res.data.data.totalPage))
+}
+export const getAllCategory = () => async (dispatch, getState) =>  {
+    let res
+    try {
+        res = await axios.get(`http://localhost:8180/all/category/`)
     }
     catch (err) {
         return
     }
     dispatch(setCategory(res.data.data))
-    dispatch(categorySetTotalPage(res.data.totalPage))
 }
+
 
 export const getPublisher = () => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.get(`http://localhost:${BACKEND_PORT}/publisher/all/` + getState().bookReducers.publisher.page)
+        res = await axios.get(`http://localhost:8180/publisher/` + getState().bookReducers.publisher.page)
+    }
+    catch (err) {
+        return
+    }
+    dispatch(setPublisher(res.data.data.publishers))
+    dispatch(publisherSetTotalPage(res.data.data.totalPage))
+}
+
+export const getAllPublisher = () => async (dispatch, getState) => {
+    let res
+    try {
+        res = await axios.get(`http://localhost:8180/all/publisher/`)
     }
     catch (err) {
         return
     }
     dispatch(setPublisher(res.data.data))
-    dispatch(publisherSetTotalPage(res.data.totalPage))
 }
+
 
 export const getAuthor = () => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.get(`http://localhost:${BACKEND_PORT}/author/all/` + getState().bookReducers.author.page)
+        res = await axios.get(`http://localhost:8180/author/` + getState().bookReducers.author.page)
+    }
+    catch(err) {
+        return
+    }
+    dispatch(setAuthor(res.data.data.authors))
+    dispatch(authorSetTotalPage(res.data.data.totalPage))
+}
+
+export const getAllAuthor = () => async (dispatch, getState) => {
+    let res
+    try {
+        res = await axios.get(`http://localhost:8180/all/author/`)
     }
     catch(err) {
         return
     }
     dispatch(setAuthor(res.data.data))
-    dispatch(authorSetTotalPage(res.data.totalPage))
 }
 
 export const setCategory = (data) => ({
@@ -135,7 +169,7 @@ export const addCategory =  (name) => async (dispatch, getState) => {
     dispatch(resetCategory())
     let res
     try {
-        res = await axios.post(`http://localhost:${BACKEND_PORT}/admin/addcategory`, {
+        res = await axios.post(`http://localhost:8180/category`, {
             name: name
         })
     }
@@ -150,7 +184,7 @@ export const addCategory =  (name) => async (dispatch, getState) => {
 export const updateCategory =  (id, name) => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.post(`http://localhost:${BACKEND_PORT}/admin/updatecategory`, {
+        res = await axios.put(`http://localhost:8180/category`, {
             id: id,
             name: name
         })
@@ -181,7 +215,7 @@ export const addAuthor =  (name) => async (dispatch, getState) => {
     dispatch(resetAuthor())
     let res
     try {
-        res = await axios.post(`http://localhost:${BACKEND_PORT}/admin/addauthor`, {
+        res = await axios.post(`http://localhost:8180/author`, {
             name: name
         })
     }
@@ -196,8 +230,7 @@ export const addAuthor =  (name) => async (dispatch, getState) => {
 export const updateAuthor =  (id, name) => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.post(`http://localhost:${BACKEND_PORT}/admin/updateauthor`, {
-            id: id,
+        res = await axios.put(`http://localhost:8180/author/` + id, {
             name: name
         })
     }
@@ -227,7 +260,7 @@ export const addPublisher =  (name) => async (dispatch, getState) => {
     dispatch(resetPublisher())
     let res
     try {
-        res = await axios.post(`http://localhost:${BACKEND_PORT}/admin/addpublisher`, {
+        res = await axios.post(`http://localhost:8180/publisher`, {
             name: name
         })
     }
@@ -242,7 +275,7 @@ export const addPublisher =  (name) => async (dispatch, getState) => {
 export const updatePublisher =  (id, name) => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.post(`http://localhost:${BACKEND_PORT}/admin/updatepublisher`, {
+        res = await axios.post(`http://localhost:8180/publisher/` + id, {
             id: id,
             name: name
         })

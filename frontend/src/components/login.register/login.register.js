@@ -7,7 +7,7 @@ import FooterMiddle from '../footer/footer.middle'
 import FooterBottom from '../footer/footer.bottom'
 import ContentLoginRegister from './content.login.register'
 const Home = ({ setEmailogin, setPasswordlogin, setEmail,
-    setFirstname, setLastname, setAddress, setPhone, setPassword, setConfirm,
+    setUsername, setAddress, setPhone, setPassword, setConfirm,
     notificationRegister,notificationLogin, registerSubmit, 
      loginSubmit, islogin, logout, sortType, setSortType, setSearchText,
      searchTextSubmit, history}) => (
@@ -25,8 +25,7 @@ const Home = ({ setEmailogin, setPasswordlogin, setEmail,
                 setEmailogin={(value) => setEmailogin(value)}
                 setPasswordlogin={(value) => setPasswordlogin(value)}
                 setEmail={(value) => setEmail(value)}
-                setFirstname={(value) => setFirstname(value)}
-                setLastname={(value) => setLastname(value)}
+                setUsername={(value) => setUsername(value)}
                 setAddress={(value) => setAddress(value)}
                 setPhone={(value) => setPhone(value)}
                 setPassword={(value) => setPassword(value)}

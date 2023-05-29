@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import React, { useState } from 'react'
 function ContentLoginRegister({ setEmailogin, setPasswordlogin, setEmail,
-    setFirstname, setLastname, setAddress, setPhone, setPassword, setConfirm,
+    setUsername, setAddress, setPhone, setPassword, setConfirm,
     notificationRegister, notificationLogin, registerSubmit, loginSubmit }){
         const [Login,setLogin] = useState(true);
         const [Register,setRegister] = useState(false);
@@ -57,12 +57,8 @@ function ContentLoginRegister({ setEmailogin, setPasswordlogin, setEmail,
                 onChange={(e) => { setEmail(e.target.value) }}
             />
             <input type="text"
-                placeholder="First name"
-                onChange={(e) => { setFirstname(e.target.value) }}
-            />
-            <input type="text"
-                placeholder="Last name"
-                onChange={(e) => { setLastname(e.target.value) }}
+                placeholder="Name"
+                onChange={(e) => { setUsername(e.target.value) }}
             />
             <input type="text"
                 placeholder="Address"

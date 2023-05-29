@@ -200,7 +200,7 @@ class Author extends Component {
                                 this.setState({
                                   currname: element.name,
                                   name: element.name,
-                                  id: element._id,
+                                  id: element.id,
                                   currType: "update"
                                 })
                               }

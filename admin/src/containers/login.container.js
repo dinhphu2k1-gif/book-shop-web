@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { connect } from "react-redux";
+import jwt_decode from 'jwt-decode';
 import { bindActionCreators } from "redux";
 import * as userActions from "../actions/user.action";
 import Login from "../components/login/login";
@@ -23,23 +24,24 @@ class LoginContainer extends Component {
     }
     let res;
     try {
-      res = await axios.post(`http://localhost:${BACKEND_PORT}/admin/login`, {
+      res = await axios.post(`http://localhost:8180/admin/login`, {
         email: email,
         password: password
       });
     } catch (err) {
       if (err.response !== undefined) {
-        if (err.response.data.msg === "no_registration_confirmation")
-          this.setState({ notiLogin: "The account has not been activated" });
+        if (err.response.data.message === "Email hoặc mật khẩu không đúng")
+          this.setState({ notiLogin: "Email hoặc mật khẩu không đúng" });
         else {
-          this.setState({ notiLogin: "Email or password invalid" });
+          this.setState({ notiLogin: "The account has not been activated" });
         }
       } else {
         this.setState({ notiLogin: "Some thing went wrong" });
       }
       return;
     }
-    this.props.userActions.loginSuccess(res.data.token, res.data.user);
+    var decodedToken = jwt_decode(res.data.data.token);
+    this.props.userActions.loginSuccess(res.data.data.token, decodedToken.user_id);
     window.location.replace('/')
   };
   isvalidEmail = email => {

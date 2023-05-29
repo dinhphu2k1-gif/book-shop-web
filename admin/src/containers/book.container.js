@@ -8,10 +8,10 @@ import Slider from "./slider.container";
 import * as userActions from "../actions/user.action";
 class BookContainer extends Component {
   async componentWillMount() {
-    this.props.bookActions.getCategory();
-    this.props.bookActions.getPublisher();
+    this.props.bookActions.getAllCategory();
+    this.props.bookActions.getAllPublisher();
     this.props.bookActions.getBook();
-    this.props.bookActions.getAuthor();
+    this.props.bookActions.getAllAuthor();
     let res = await this.props.userActions.auth();
     if (res === false) this.props.history.push("/login");
   }
