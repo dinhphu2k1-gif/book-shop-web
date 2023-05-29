@@ -133,13 +133,12 @@ export const auth = () => async (dispatch, getState) => {
         dispatch(setLoginFail())
         return false
     }
-    let email = storeConfig.getUser().email
+    let user_id = storeConfig.getUserId()
     let token = storeConfig.getToken()
-    console.log(email)
     let res
     try {
         res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/auth`, {
-            email: email,
+            userId: user_id,
             token: token,
         })
     }

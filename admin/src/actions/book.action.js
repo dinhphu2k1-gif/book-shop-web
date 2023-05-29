@@ -77,8 +77,18 @@ export const getCategory = () => async (dispatch, getState) =>  {
     catch (err) {
         return
     }
+    dispatch(setCategory(res.data.data.categories))
+    dispatch(categorySetTotalPage(res.data.data.totalPage))
+}
+export const getAllCategory = () => async (dispatch, getState) =>  {
+    let res
+    try {
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/all/category/`)
+    }
+    catch (err) {
+        return
+    }
     dispatch(setCategory(res.data.data))
-    dispatch(categorySetTotalPage(res.data.totalPage))
 }
 
 export const getPublisher = () => async (dispatch, getState) => {
@@ -89,8 +99,19 @@ export const getPublisher = () => async (dispatch, getState) => {
     catch (err) {
         return
     }
+    dispatch(setPublisher(res.data.data.publishers))
+    dispatch(publisherSetTotalPage(res.data.data.totalPage))
+}
+
+export const getAllPublisher = () => async (dispatch, getState) => {
+    let res
+    try {
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/all/publisher/`)
+    }
+    catch (err) {
+        return
+    }
     dispatch(setPublisher(res.data.data))
-    dispatch(publisherSetTotalPage(res.data.totalPage))
 }
 
 export const getAuthor = () => async (dispatch, getState) => {
@@ -101,8 +122,19 @@ export const getAuthor = () => async (dispatch, getState) => {
     catch(err) {
         return
     }
+    dispatch(setAuthor(res.data.data.authors))
+    dispatch(authorSetTotalPage(res.data.data.totalPage))
+}
+
+export const getAllAuthor = () => async (dispatch, getState) => {
+    let res
+    try {
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/all/author/`)
+    }
+    catch(err) {
+        return
+    }
     dispatch(setAuthor(res.data.data))
-    dispatch(authorSetTotalPage(res.data.totalPage))
 }
 
 export const setCategory = (data) => ({
