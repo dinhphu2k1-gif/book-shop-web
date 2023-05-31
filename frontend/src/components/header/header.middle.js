@@ -10,9 +10,9 @@ class HeaderMiddle extends Component {
   }
   componentWillMount() {
     if (storeConfig.getUser() !== null) {
-      this.setState({
-        email: storeConfig.getUser().email
-      });
+      // this.setState({
+      //   email: storeConfig.getUser().email
+      // });
     }
   }
   componentWillReceiveProps(nextProps) {
@@ -21,9 +21,9 @@ class HeaderMiddle extends Component {
         email: "Account"
       });
     } else {
-      this.setState({
-        email: storeConfig.getUser().email
-      });
+      // this.setState({
+      //   email: storeConfig.getUser().email
+      // });
     }
   }
   handlelogin = () => {

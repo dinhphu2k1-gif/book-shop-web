@@ -7,14 +7,13 @@ require('dotenv').config();
 const BACKEND_HOST = process.env.BACKEND_HOST || 'localhost'
 
 export const auth = () => async (dispatch, getState) => {
-    if(storeConfig.getUser() === null){
+    if(storeConfig.getUserId() === null){
         dispatch(setAuthFail())
         return false
     }
-    const user = storeConfig.getUser()
     try {
         await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/auth`, {
-            email: user.email,
+            userId: storeConfig.getUserId(),
             token: storeConfig.getToken(),
         })
     }

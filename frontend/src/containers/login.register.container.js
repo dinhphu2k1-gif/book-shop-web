@@ -132,7 +132,8 @@ class LoginRegisterContainer extends Component {
             }
             return
         }
-        this.props.actions.loginSuccess(res.data.token, res.data.user)
+        var decodedToken = jwt_decode(res.data.data.token);
+        this.props.actions.loginSuccess(res.data.data.token, decodedToken.user_id)
         this.props.history.push('/')
 
     }

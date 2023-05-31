@@ -35,14 +35,13 @@ exports.getUser = () => {
 
     return JSON.parse(localStorage.getItem('user'))
 }
+exports.setUserId = (userId) => {
+    localStorage.setItem('user_id', userId)
+}
 exports.getUserId = () => {
-    let user = this.getUser();
-    if (user == null) {
+    if (localStorage.getItem('user_id') === null)
         return null
-    }
-
-    // console.log("user", user)
-    return user.id
+    return localStorage.getItem('user_id')
 }
 
 exports.clear = () => {

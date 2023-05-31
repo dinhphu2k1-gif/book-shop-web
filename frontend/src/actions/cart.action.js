@@ -85,7 +85,7 @@ export const payment = (address, phone, name, total) => async (dispatch, getStat
             phone: phone,
             name: name,
             total: total,
-            email: storeConfig.getUser().email
+            //email: storeConfig.getUser().email
         })
     }
     catch (err) {
