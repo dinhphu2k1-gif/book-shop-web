@@ -2,6 +2,9 @@ import axios from 'axios'
 import { userTypes } from '../constants/action.types'
 import storeConfig from '../config/store.config'
 import { BACKEND_PORT } from '../config/application.config'
+require('dotenv').config();
+
+const BACKEND_HOST = process.env.BACKEND_HOST || 'localhost'
 
 export const setUser = (data) => ({
     type: userTypes.SET_USER,
@@ -10,7 +13,7 @@ export const setUser = (data) => ({
 export const getUser = () => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.get(`http://localhost:${BACKEND_PORT}/admin/getAllUser/` + getState().userReducers.user.page)
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/admin/getAllUser/` + getState().userReducers.user.page)
     }
     catch (err) {
         console.log(err)
@@ -45,7 +48,7 @@ export const backPage = () => (dispatch, getState) => {
 export const deleteUser = (email) => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.post(`http://localhost:${BACKEND_PORT}/admin/deleteuser/`, {
+        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/admin/deleteuser/`, {
             email: email
         })
     }
@@ -74,7 +77,7 @@ export const addUser = (email, password, firstName, lastName, address, phone_num
     dispatch(resetUser())
     let res
     try {
-        res = await axios.post(`http://localhost:${BACKEND_PORT}/admin/adduser`, {
+        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/admin/adduser`, {
             email: email,
             firstName: firstName,
             lastName: lastName,
@@ -95,7 +98,7 @@ export const addUser = (email, password, firstName, lastName, address, phone_num
 export const updateUser = (email, firstName, lastName, address, phone_number, is_admin) => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.post(`http://localhost:${BACKEND_PORT}/admin/updateuser`, {
+        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/admin/updateuser`, {
             email: email,
             firstName: firstName,
             lastName: lastName,
@@ -135,7 +138,7 @@ export const auth = () => async (dispatch, getState) => {
     console.log(email)
     let res
     try {
-        res = await axios.post(`http://localhost:${BACKEND_PORT}/auth`, {
+        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/auth`, {
             email: email,
             token: token,
         })

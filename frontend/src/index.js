@@ -34,7 +34,7 @@ import { FormTrackingPlugin, enableFormTracking } from '@snowplow/browser-plugin
 import { EcommercePlugin } from '@snowplow/browser-plugin-ecommerce';
 import { addGlobalContexts } from "@snowplow/browser-tracker";
 
-
+require('dotenv').config();
 
 const middleware = [thunk];
 
@@ -65,8 +65,9 @@ let user_context = {
     }
 }
 
+const COLLECTOR_HOST = process.env.COLLECTOR_HOST || 'localhost'
 // snowplow
-newTracker("book-shop-tracker", "http://localhost:8080", {
+newTracker("book-shop-tracker", `http://${COLLECTOR_HOST}:8080`, {
     appId: "book-shop", // you can specify your own app name here
     platform: "web",
     encodeBase64: true,
@@ -106,8 +107,6 @@ enableFormTracking({
     },
 });
 
-
-console.log("alo")
 
 render(
     <Provider store={store}>

@@ -3,6 +3,10 @@ import axios from 'axios'
 import VerifyPayment from '../components/verify.payment/verify.payment'
 import NotFound from '../components/404/404'
 import { BACKEND_PORT } from '../config/application.config'
+require('dotenv').config();
+
+const BACKEND_HOST = process.env.BACKEND_HOST || 'localhost'
+
 class VerifyPaymentContainer extends Component {
     constructor(props){
         super(props)
@@ -12,7 +16,7 @@ class VerifyPaymentContainer extends Component {
     }
     async componentWillMount() {
         try {
-            await axios.get(`http://localhost:${BACKEND_PORT}/bill/verify/` + this.props.match.params.token)
+            await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/bill/verify/` + this.props.match.params.token)
         }
         catch(err) {
             console.log(err)

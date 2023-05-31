@@ -1,6 +1,9 @@
 import axios from 'axios'
 import {homeTypes} from '../constants/action.types'
 import { BACKEND_PORT } from '../config/application.config'
+require('dotenv').config();
+
+const BACKEND_HOST = process.env.BACKEND_HOST || 'localhost'
 
 export const setTopProduct = (data) => ({
     type: homeTypes.SET_TOP_PRODUCT,
@@ -9,7 +12,7 @@ export const setTopProduct = (data) => ({
 export const getTopProduct = () => async (dispatch, getState) => {
     let res = null
     try {
-        res = await axios.post(`http://localhost:${BACKEND_PORT}/bill/top/`)
+        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/bill/top/`)
     }
     catch(err) {
         console.log(err)

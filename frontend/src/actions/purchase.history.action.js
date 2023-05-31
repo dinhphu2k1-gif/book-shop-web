@@ -2,6 +2,9 @@ import axios from 'axios'
 import storeConfig from '../config/storage.config'
 import { purchaseHistoryTypes } from '../constants/action.types'
 import { BACKEND_PORT } from '../config/application.config'
+require('dotenv').config();
+
+const BACKEND_HOST = process.env.BACKEND_HOST || 'localhost'
 
 export const setPurchaseHistory = (data) => ({
     type: purchaseHistoryTypes.SET_PURCHASED_HISTORY,
@@ -13,7 +16,7 @@ export const getPurchaseHitory = () => async (dispatch, getState) => {
     if (user === null)
         return
     try {
-        res = await axios.get(`http://localhost:${BACKEND_PORT}/bill/` + user.id)
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/bill/` + user.id)
     }
     catch (err) {
         console.log(err)
@@ -24,7 +27,7 @@ export const getPurchaseHitory = () => async (dispatch, getState) => {
 export const deleteBill = (id) => async (dispatch, getState) => {
     let res = null;
     try {
-        res = await axios.get(`http://localhost:${BACKEND_PORT}/bill/delete/` + id)
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/bill/delete/` + id)
     }
     catch (err) {
         console.log(err.response)

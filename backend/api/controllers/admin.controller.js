@@ -1,5 +1,6 @@
 require('dotenv').config();
 const PORT = process.env.PORT;
+const DB_HOST = process.env.DB_HOST || 'localhost'
 
 var cloudinary = require("cloudinary").v2;
 var uploads = {};
@@ -52,7 +53,7 @@ exports.addBook = async (req, res, next) => {
   } = req.body;
 
   // console.log("file: ", req.file);
-  let urlImg = `http://localhost:${PORT}/` + req.file.filename;
+  let urlImg = `http://${DB_HOST}:${PORT}/` + req.file.filename;
 
   // // await uploadImg(req.file.path);
   // // if (urlImg === false) {

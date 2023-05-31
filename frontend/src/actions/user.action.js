@@ -2,6 +2,9 @@ import { userTypes } from '../constants/action.types'
 import storeConfig from '../config/storage.config'
 import axios from 'axios'
 import { BACKEND_PORT } from '../config/application.config'
+require('dotenv').config();
+
+const BACKEND_HOST = process.env.BACKEND_HOST || 'localhost'
 
 export const loginSuccess = (token, user) => async (dispatch, getState) => {
     storeConfig.setUser(user)
@@ -13,7 +16,7 @@ export const loginSuccess = (token, user) => async (dispatch, getState) => {
     if(cart !== null) {
         let res
         try {
-            res = await axios.post(`http://localhost:${BACKEND_PORT}/cart/addtocard`, {
+            res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/cart/addtocard`, {
                 id_user: user.id,
                 products: cart
             })
@@ -34,7 +37,7 @@ export const auth = () => async (dispatch, getState)  => {
     let token = storeConfig.getToken()
     let res
     try {
-        res = await axios.post(`http://localhost:${BACKEND_PORT}/auth`, {
+        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/auth`, {
             email: email,
             token: token,
         })
@@ -82,7 +85,7 @@ export const setEmailForgotPassword = (email) => ({
 export const submitForgotPassword = (email) => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.get(`http://localhost:${BACKEND_PORT}/user/request/forgotpassword/` +email)
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/user/request/forgotpassword/` +email)
     }
     catch (err) {
         dispatch(forgotEmailFail())
@@ -94,7 +97,7 @@ export const submitForgotPassword = (email) => async (dispatch, getState) => {
 export const submitOTP = (otp) => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.post(`http://localhost:${BACKEND_PORT}/user/verify/forgotpassword`, {
+        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/user/verify/forgotpassword`, {
             email: getState().userReducers.forgotPassword.email,
             otp: otp,
         })
@@ -117,7 +120,7 @@ export const verifyOTPFAIL = () => ({
 export const submitEnterNewPassword = (newPassword) => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.post(`http://localhost:${BACKEND_PORT}/user/forgotpassword`, {
+        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/user/forgotpassword`, {
             email: getState().userReducers.forgotPassword.email,
             otp: getState().userReducers.forgotPassword.otp,
             newPassword: newPassword

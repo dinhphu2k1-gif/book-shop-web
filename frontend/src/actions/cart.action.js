@@ -2,6 +2,9 @@ import { cartTypes } from '../constants/action.types'
 import axios from 'axios'
 import storeConfig from '../config/storage.config'
 import { BACKEND_PORT } from '../config/application.config'
+require('dotenv').config();
+
+const BACKEND_HOST = process.env.BACKEND_HOST || 'localhost'
 
 export const setCart = (data) => ({
     type: cartTypes.SET_CART,
@@ -18,7 +21,7 @@ export const getCart = () => async (dispatch, getState) => {
         return
     let id_user = storeConfig.getUser().id
     try {
-        cart = await axios.get(`http://localhost:${BACKEND_PORT}/cart/` + id_user)
+        cart = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/cart/` + id_user)
     }
     catch (err) {
         console.log(err)
@@ -35,7 +38,7 @@ export const updateProductInCart = (product) => async (dispatch, getState) => {
     }
     else {
         try {
-            await axios.post(`http://localhost:${BACKEND_PORT}/cart/update`, {
+            await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/cart/update`, {
                 id_user: storeConfig.getUser().id,
                 product: product
             })
@@ -51,7 +54,7 @@ export const deteleProductInCart = (id_product) => async (dispatch, getState) =>
         storeConfig.deteleProductInCart(id_product)
     } else {
         try {
-            await axios.post(`http://localhost:${BACKEND_PORT}/cart/delete`, {
+            await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/cart/delete`, {
                 id_user: storeConfig.getUser().id,
                 id_product: id_product
             })
@@ -76,7 +79,7 @@ export const resetPayment = () => ({
 export const payment = (address, phone, name, total) => async (dispatch, getState) => {
     let res = null
     try {
-        res = await axios.post(`http://localhost:${BACKEND_PORT}/bill/add`, {
+        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/bill/add`, {
             id_user: storeConfig.getUser().id,
             address: address,
             phone: phone,
