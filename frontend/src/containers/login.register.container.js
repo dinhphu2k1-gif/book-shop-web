@@ -3,6 +3,7 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import LoginRegister from '../components/login.register/login.register'
+import jwt_decode from "jwt-decode";
 import * as userActions from '../actions/user.action'
 import * as homeActions from '../actions/home.action'
 import { BACKEND_PORT } from '../config/application.config'
@@ -110,7 +111,7 @@ class LoginRegisterContainer extends Component {
         }
         let res
         try {
-            res = await axios.post(`http://localhost:${BACKEND_PORT}/user/login`, {
+            res = await axios.post(`http://localhost:8180/login`, {
                 email: this.state.emailLogin,
                 password: this.state.passwordLogin,
             })
@@ -128,7 +129,8 @@ class LoginRegisterContainer extends Component {
             }
             return
         }
-        this.props.actions.loginSuccess(res.data.token, res.data.user)
+        var decodedToken = jwt_decode(res.data.data.token);
+        this.props.actions.loginSuccess(res.data.data.token, decodedToken.user_id)
         this.props.history.push('/')
 
     }

@@ -23,10 +23,10 @@ class ContentProductDetail extends Component {
     }
     this.setState({ pagination: tmp });
     if (storeConfig.getUser() !== null) {
-      this.setState({
-        name: storeConfig.getUser().firstName,
-        email: storeConfig.getUser().email
-      });
+      // this.setState({
+      //   name: storeConfig.getUser().firstName,
+      //   //email: storeConfig.getUser().email
+      // });
     } else {
       this.setState({
         name: "",

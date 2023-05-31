@@ -28,13 +28,13 @@ class ProfileContainer extends Component {
     // if(this.props.match.params.email !==  storeConfig.getUser().email)
     //     this.props.history.push('/')
     if (storeConfig.getUser() !== null) {
-      this.setState({
-        email: storeConfig.getUser().email,
-        firstName: storeConfig.getUser().firstName,
-        lastName: storeConfig.getUser().lastName,
-        address: storeConfig.getUser().address,
-        phone_number: storeConfig.getUser().phone_number
-      });
+      // this.setState({
+      //   //email: storeConfig.getUser().email,
+      //   //firstName: storeConfig.getUser().firstName,
+      //   //lastName: storeConfig.getUser().lastName,
+      //   //address: storeConfig.getUser().address,
+      //   //phone_number: storeConfig.getUser().phone_number
+      // });
     }
   }
   componentWillUnmount() {
@@ -44,7 +44,7 @@ class ProfileContainer extends Component {
     let res = null;
     try {
       res = await axios.post(`http://localhost:${BACKEND_PORT}/user/updatepassword`, {
-        email: storeConfig.getUser().email,
+        //email: storeConfig.getUser().email,
         oldpassword: oldpassword,
         newpassword: newpassword
       });

@@ -4,14 +4,13 @@ import { profileTypes } from '../constants/action.types'
 import { BACKEND_PORT } from '../config/application.config'
 
 export const auth = () => async (dispatch, getState) => {
-    if(storeConfig.getUser() === null){
+    if(storeConfig.getUserId() === null){
         dispatch(setAuthFail())
         return false
     }
-    const user = storeConfig.getUser()
     try {
-        await axios.post(`http://localhost:${BACKEND_PORT}/auth`, {
-            email: user.email,
+        await axios.post(`http://localhost:8180/auth`, {
+            userId: storeConfig.getUserId(),
             token: storeConfig.getToken(),
         })
     }

@@ -5,17 +5,14 @@ import { BACKEND_PORT } from '../config/application.config'
 export const getBook = () => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.post(`http://localhost:${BACKEND_PORT}/book/allbook`, {
-            page: getState().bookReducers.book.page,
-            range: null
-        })
+        res = await axios.get(`http://localhost:8180/book/` + getState().bookReducers.book.page)
     }
     catch (err) {
         console.log(err)
         return
     }
-    dispatch(setBook(res.data.data))
-    dispatch(setTotalPage(res.data.totalPage))
+    dispatch(setBook(res.data.data.books))
+    dispatch(setTotalPage(res.data.data.totalPage))
 }
 export const setBook = (data) => ({
     type: bookTypes.SET_BOOK,
@@ -371,23 +368,36 @@ export const updateBookFail = () => ({
 })
 export const addBook = (id_category, name, price, release_date, describe, id_nsx, id_author, file) =>
  async (dispatch, getState) => {
-    let data = new FormData()
-    data.append('file', file)
-    data.append('id_category', id_category) 
-    data.append('name', name) 
-    data.append('price', price)  
-    data.append('release_date', release_date)
-    data.append('describe', describe)
-    data.append('id_nsx', id_nsx)
-    data.append('id_author', id_author)
-    let res
-    try {
-        res = await axios.post(`http://localhost:${BACKEND_PORT}/admin/addbook`, data)
-    }
-    catch(err) {
-        dispatch(addBookFail())
-        return
-    } 
+    const dateStr = release_date.toString().replaceAll("-", "/")
+    console.log(dateStr)
+    fetch("http://localhost:8180/book   ", {
+        method: 'POST',
+        headers: {
+            'accept': '*/*',
+            'Content-Type': 'application/json',
+            "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+            authorIds: id_author,
+            categoryIds: id_category,
+            description: describe,
+            name: name,
+            price: price,
+            publisherId: parseInt(id_nsx),
+            releaseDate: dateStr,
+            urlImage: file
+        }),
+        credentials: "same-origin",
+    })
+        .then(response => {
+            return response.json()
+        })
+        .then(data => {
+            console.log("hello")
+        })
+        .catch((error) => {
+            dispatch(addBookFail())
+        })
     dispatch(addBookSuccess())
     dispatch(getBook())
 }

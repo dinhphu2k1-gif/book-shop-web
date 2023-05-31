@@ -3,8 +3,8 @@ import storeConfig from '../config/storage.config'
 import axios from 'axios'
 import { BACKEND_PORT } from '../config/application.config'
 
-export const loginSuccess = (token, user) => async (dispatch, getState) => {
-    storeConfig.setUser(user)
+export const loginSuccess = (token, userId) => async (dispatch, getState) => {
+    storeConfig.setUserId(userId)
     storeConfig.setToken(token)
     dispatch(setLoginSuccess())
     
@@ -14,7 +14,7 @@ export const loginSuccess = (token, user) => async (dispatch, getState) => {
         let res
         try {
             res = await axios.post(`http://localhost:${BACKEND_PORT}/cart/addtocard`, {
-                id_user: user.id,
+                id_user: userId,
                 products: cart
             })
         }
@@ -30,12 +30,11 @@ export const auth = () => async (dispatch, getState)  => {
         dispatch(setLoginFail())
         return false
     }
-    let email = storeConfig.getUser().email
     let token = storeConfig.getToken()
     let res
     try {
-        res = await axios.post(`http://localhost:${BACKEND_PORT}/auth`, {
-            email: email,
+        res = await axios.post(`http://localhost:8180/auth`, {
+            userId: storeConfig.getUserId(),
             token: token,
         })
     }
