@@ -85,17 +85,13 @@ export const setNameAuthor = (name) => ({
     name
 })
 
-export const submitComment = (name, email, comment, id_book) => async (dispatch, getState) => {
-    let id = null
-    if (storeConfig.getUser() && storeConfig.getUser().id && storeConfig.getUser().id)
-        id = storeConfig.getUser().id
+export const submitComment = (user_id, comment, id_book) => async (dispatch, getState) => {
     let res
     try {
         res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/comment`, {
-            id_user: id,
-            id_book: id_book,
-            name: name,
-            comment: comment
+            book_id: id_book,
+            content: comment,
+            user_id: user_id
         })
     }
     catch (err) {
@@ -129,17 +125,15 @@ export const nextPage = () => (dispatch, getState) => {
 export const getCommentByIDBook = (id) => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/comment/book`, {
-             id_book: id,
-             page: getState().productReducers.product.page
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/comment?bookId=` + id + "&page=" + getState().productReducers.product.page, {
             })
     }
     catch (err) {
         console.log(JSON.stringify(err.response))
         return
     }
-    dispatch(setTotalPage(res.data.totalPage))
-    dispatch(setComment(res.data.data))
+    dispatch(setTotalPage(res.data.data.totalPage))
+    dispatch(setComment(res.data.data.comments))
 }
 export const setComment = (data) => ({
     type: productTypes.SET_COMMENT,
@@ -150,9 +144,8 @@ export const addToCart = (product) => async (dispatch, getState) => {
     if (getState().userReducers.login.islogin) {
         let res
         try {
-            res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/cart/addtocard`, {
-                id_user: storeConfig.getUser().id,
-                products: [product]
+            const link = `http://${BACKEND_HOST}:${BACKEND_PORT}/cart/add?userId=` + storeConfig.getUserId() + "&quantity=" + product.count + "&bookId=" + product.id
+            res = await axios.get(link, {
             })
         }
         catch (err) {
@@ -160,6 +153,10 @@ export const addToCart = (product) => async (dispatch, getState) => {
             return
         }
     } else {
-        storeConfig.addProductToCart(product)
+        alert("Bạn cần phải đăng nhập");
+        localStorage.setItem("location", window.location.href)
+        return (
+            window.location.href = "/login_register"
+        )
     }
 }

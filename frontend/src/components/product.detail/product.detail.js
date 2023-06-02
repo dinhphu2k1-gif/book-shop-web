@@ -35,9 +35,9 @@ class ProductDetail extends Component {
           namePublicsher={this.props.namePublicsher}
           bookrelated={this.props.bookrelated}
           islogin={this.props.islogin}
-          id_book={this.props.id_book}
-          submitComment={(name, email, comment, id_book) =>
-            this.props.submitComment(name, email, comment, id_book)
+          id={this.props.mproductDetail.id}
+          submitComment={(user_id, comment, id) =>
+            this.props.submitComment(user_id, comment, id)
           }
           comment={this.props.comment}
           nameAuthor={this.props.nameAuthor}

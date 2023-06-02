@@ -14,9 +14,8 @@ class HistoryPurchaseContainer extends Component {
     }
     componentWillMount() {
         this.props.actions.auth()
-        this.props.purchaseHistoryActions.getPurchaseHitory()
+        this.props.purchaseHistoryActions.getPurchaseHitory(1)
     }
-
     async trackingDeleteBill(id) {
         let bill = await this.props.purchaseHistoryActions.deleteBill(id)
 
@@ -51,6 +50,7 @@ class HistoryPurchaseContainer extends Component {
                     history={this.props.history}
                     purchaseHistory={this.props.purchaseHistory}
                     deleteBill={(id) => this.trackingDeleteBill(id)}
+                    getPurchaseHitory={(status) => this.props.purchaseHistoryActions.getPurchaseHitory(status)}
                 />
             </div>
         )

@@ -62,7 +62,7 @@ exports.addProductToCart = (product) => {
     } else {
         cart = []
     }
-    let index = cart.findIndex(element => product._id === element._id)
+    let index = cart.findIndex(element => product.id === element.id)
     if (index === -1) {
         cart = [...cart, product]
     } else {
@@ -75,7 +75,7 @@ exports.updateProductInCart = (product) => {
     if (cart === null) {
         return false
     }
-    let index = cart.findIndex(element => product._id === element._id)
+    let index = cart.findIndex(element => product.id === element.id)
     if (index === -1) {
         return false
     } else {
@@ -89,7 +89,7 @@ exports.deteleProductInCart = (id_product) => {
     if (cart === null) {
         return false
     }
-    let index = cart.findIndex(element => id_product === element._id)
+    let index = cart.findIndex(element => id_product === element.id)
     if (index === -1) {
         return false
     } else {
