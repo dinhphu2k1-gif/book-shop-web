@@ -24,8 +24,8 @@ class Cart extends Component {
         <ContentCart
           islogin={this.props.islogin}
           cart={this.props.cart}
-          updateProductInCart={product =>
-            this.props.updateProductInCart(product)
+          updateProductInCart={(product, quantity) =>
+            this.props.updateProductInCart(product, quantity)
           }
           deteleProductInCart={(product) => this.props.deteleProductInCart(product)}
     

@@ -22,7 +22,7 @@ class ContentCart extends Component {
     let total = 0;
     for (let i = 0; i < this.props.cart.length; i++) {
       total +=
-        Number(this.props.cart[i].price) * Number(this.props.cart[i].count);
+        Number(this.props.cart[i].price) * Number(this.props.cart[i].quantity);
     }
   }
   componentWillReceiveProps(nextProps) {
@@ -30,7 +30,7 @@ class ContentCart extends Component {
       let total = 0;
       for (let i = 0; i < nextProps.cart.length; i++) {
         total +=
-          Number(nextProps.cart[i].price) * Number(nextProps.cart[i].count);
+          Number(nextProps.cart[i].price) * Number(nextProps.cart[i].quantity);
       }
       this.setState({ total: total });
     }
@@ -128,7 +128,7 @@ class ContentCart extends Component {
                       <tr>
                         <td className="cart_product">
                           <a href="">
-                            <img src={element.img} alt="" />
+                            <img src={element.urlImage} alt="" />
                           </a>
                         </td>
                         <td className="cart_description">
@@ -145,8 +145,7 @@ class ContentCart extends Component {
                             <span
                               className="cart_quantity_up"
                               onClick={() => {
-                                element.count += 1;
-                                this.props.updateProductInCart(element);
+                                this.props.updateProductInCart(element, 1);
                               }}
                             >
                               {" "}
@@ -156,18 +155,14 @@ class ContentCart extends Component {
                               className="cart_quantity_input"
                               type="text"
                               name="quantity"
-                              value={element.count}
+                              value={element.quantity}
                               autocomplete="off"
                               size="2"
                             />
                             <span
                               className="cart_quantity_down"
                               onClick={() => {
-                                if (element.count === 1) {
-                                  return;
-                                }
-                                element.count -= 1;
-                                this.props.updateProductInCart(element);
+                                this.props.updateProductInCart(element, -1);
                               }}
                             >
                               {" "}
@@ -177,7 +172,7 @@ class ContentCart extends Component {
                         </td>
                         <td className="cart_total">
                           <p className="cart_total_price">
-                          {new Intl.NumberFormat('de-DE', {currency: 'EUR' }).format(element.price * element.count)}<sup>đ</sup>
+                          {new Intl.NumberFormat('de-DE', {currency: 'EUR' }).format(element.price * element.quantity)}<sup>đ</sup>
                             
                           </p>
                         </td>

@@ -63,7 +63,7 @@ class ProductDetailContainer extends Component {
         this.props.productActions.addToCart(product)
     }
 
-    trackingCommentProduct(name, email, comment, id_book) {
+    trackingCommentProduct(user_id, comment, id) {
         trackSelfDescribingEvent({
             event: {
                 schema: 'iglu:com.bookshop/product_action/jsonschema/1-1-0',
@@ -87,7 +87,7 @@ class ProductDetailContainer extends Component {
             ]
         })
 
-        this.props.productActions.submitComment(name, email, comment, id_book)
+        this.props.productActions.submitComment(user_id, comment, id)
     }
 
     render() {
@@ -108,7 +108,7 @@ class ProductDetailContainer extends Component {
                         bookrelated={this.props.bookrelated}
                         logout={() => this.props.actions.logout()}
                         id_book={this.props.match.params.id}
-                        submitComment={(name, email, comment, id_book) => this.trackingCommentProduct(name, email, comment, id_book)}
+                        submitComment={(user_id, comment, id) => this.trackingCommentProduct(user_id, comment, id)}
                         comment={this.props.comment}
                         nameAuthor={this.props.nameAuthor}
                         addToCart={(product) => this.trackingAddProductToCart(product)}

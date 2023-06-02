@@ -7,6 +7,7 @@ class ContentProductDetail extends Component {
     super(props);
     this.state = {
       name: "",
+      user_id: storeConfig.getUserId(),
       email: "",
       notificationComment: "",
       comment: "",
@@ -83,18 +84,11 @@ class ContentProductDetail extends Component {
       );
     }
   }
-  handlename = name => {
-    if (this.state.name === "") {
-      this.setState({ name: name });
-    }
-  };
   submitComment = () => {
-    if (this.state.name === "") {
-      this.setState({ notificationComment: "Name must not be blank " });
-      return;
-    } else {
-      this.setState({ notificationComment: "" });
+    if (this.state.user_id === undefined){
+      this.setState({ notificationComment: "Bạn cần đăng nhập để bình luận" });
     }
+    
     if (this.state.comment === "") {
       this.setState({ notificationComment: "Comment must not be blank " });
       return;
@@ -104,10 +98,9 @@ class ContentProductDetail extends Component {
     console.log("content product details", this.props)
 
     this.props.submitComment(
-      this.state.name,
-      this.state.email,
+      this.state.user_id,
       this.state.comment,
-      this.props.id_book
+      this.props.id
     );
     this.setState({ comment: "" });
   };
@@ -136,8 +129,7 @@ class ContentProductDetail extends Component {
       <div className='aler-body'>Đặt Hàng thành công</div>
       <div className='alert-footer'>
         <button className="roduct-variation" onClick={() => this.setState({ noti: false })}>
-          Cancel
-          
+          OK
         </button>
       </div>
     </div>
@@ -262,7 +254,7 @@ class ContentProductDetail extends Component {
                           {this.props.comment.map((element, index) => {
                             return (
                               <p>
-                                <span>{element.name}:</span> {element.comment}
+                                <span>{element.userName}:</span> {element.content}
                               </p>
                             );
                           })}

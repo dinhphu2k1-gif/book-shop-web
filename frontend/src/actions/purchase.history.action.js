@@ -7,13 +7,19 @@ export const setPurchaseHistory = (data) => ({
     type: purchaseHistoryTypes.SET_PURCHASED_HISTORY,
     data
 })
-export const getPurchaseHitory = () => async (dispatch, getState) => {
+export const getPurchaseHitory = (status) => async (dispatch, getState) => {
     let res = null
-    let user = storeConfig.getUser()
-    if (user === null)
-        return
+    let userId = storeConfig.getUserId()
+    if (!storeConfig.getUserId()) {
+        alert("Bạn cần phải đăng nhập");
+        localStorage.setItem("location", window.location.href)
+        return (
+            window.location.href = "/login_register"
+        )
+
+    }
     try {
-        res = await axios.get(`http://localhost:${BACKEND_PORT}/bill/` + user.id)
+        res = await axios.get(`http://localhost:8180/bill?userId=` + userId + "&status=" + status)
     }
     catch (err) {
         console.log(err)
@@ -24,12 +30,12 @@ export const getPurchaseHitory = () => async (dispatch, getState) => {
 export const deleteBill = (id) => async (dispatch, getState) => {
     let res = null;
     try {
-        res = await axios.get(`http://localhost:${BACKEND_PORT}/bill/delete/` + id)
+        res = await axios.delete(`http://localhost:8180/bill/` + id)
     }
     catch (err) {
         console.log(err.response)
     }
-    dispatch(getPurchaseHitory())
+    dispatch(getPurchaseHitory(1))
 
     return res.data.bill;
 }

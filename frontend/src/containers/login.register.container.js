@@ -132,7 +132,11 @@ class LoginRegisterContainer extends Component {
         var decodedToken = jwt_decode(res.data.data.token);
         this.props.actions.loginSuccess(res.data.data.token, decodedToken.user_id)
         this.props.history.push('/')
-
+        if(localStorage.getItem("location") !== null){
+            const path = localStorage.getItem("location")
+            localStorage.setItem("location", null)
+            window.location.href = path
+        }
     }
     render() {
         return (
