@@ -20,10 +20,13 @@ class ProductItem extends Component {
         // e.stopImmediatePropagation()
         let book = this.props.book
 
-        var category = await this.props.productActions.getNameCategoryByID(book.id_category)
-		var publisher = await this.props.productActions.getNamePubliserByID(book.id_nsx)
-		var author = await this.props.productActions.getNameAuthorByID(book.id_author)
-
+        // comment cho m sua id
+        // var category = await this.props.productActions.getNameCategoryByID(book.id_category)
+        var category = this.props.book.categories[0]
+		// var publisher = await this.props.productActions.getNamePubliserByID(book.id_nsx)
+        var publisher = this.props.book.publisher
+		// var author = await this.props.productActions.getNameAuthorByID(book.id_author)
+        var author = this.props.book.authors[0]
         console.log("category", category)
 
         trackSelfDescribingEvent({
@@ -36,13 +39,13 @@ class ProductItem extends Component {
             context : [{
                 schema: "iglu:com.bookshop/product_context/jsonschema/1-0-0",
                 data: {
-                    product_id: book._id,
+                    product_id: book.id, // comment cho m sua id
                     product_name: book.name,
                     quantity: 0,
                     price: book.price,
-					category: category.data.name,
-					publisher: publisher.data.name,
-					author: author.data.name
+					category: category.name,
+					publisher: publisher.name,
+					author: author.name
                 }
             }
             ]

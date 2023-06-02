@@ -10,7 +10,7 @@ const BACKEND_HOST = process.env.BACKEND_HOST || 'localhost'
 export const getBookDetail = (id) => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/book/` + id)
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/detail/book/` + id)
     }
     catch (err) {
         return
@@ -21,7 +21,7 @@ export const getBookDetail = (id) => async (dispatch, getState) => {
 export const getBookRelated = (id) => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/book/related/` + id)
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/detail/book/` + id)
     }
     catch (err) {
         return
@@ -31,36 +31,36 @@ export const getBookRelated = (id) => async (dispatch, getState) => {
 export const getNameCategoryByID = (id) => async (dispatch) => {
     let res
     try {
-        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/category/name/` + id)
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/detail/category/` + id)
     }
     catch (err) {
         return
     }
-    dispatch(setNameCategory(res.data.name))
+    dispatch(setNameCategory(res.data.data.name))
     return res
 }
 export const getNamePubliserByID = (id) => async (dispatch) => {
     let res
     try {
-        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/publisher/name/` + id)
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/detail/publisher/` + id)
     }
     catch (err) {
         return
     }
 
-    dispatch(setNamePubliser(res.data.name))
+    dispatch(setNamePubliser(res.data.data.name))
     return res
 }
 export const getNameAuthorByID = (id) => async (dispatch) => {
     let res
     try {
-        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/author/name/` + id)
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/detail/author/` + id)
     }
     catch (err) {
         return
     }
 
-    dispatch(setNameAuthor(res.data.name))
+    dispatch(setNameAuthor(res.data.data.name))
     return res
 }
 export const setProductDetail = (productDetail) => ({

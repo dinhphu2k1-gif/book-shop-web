@@ -27,9 +27,9 @@ class ProductDetailContainer extends Component {
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.mproductDetail !== null) {
-            this.props.productActions.getNameCategoryByID(nextProps.mproductDetail.id_category)
-            this.props.productActions.getNamePubliserByID(nextProps.mproductDetail.id_nsx)
-            this.props.productActions.getNameAuthorByID(nextProps.mproductDetail.id_author)
+            this.props.productActions.getNameCategoryByID(nextProps.mproductDetail.categories[0].id)
+            this.props.productActions.getNamePubliserByID(nextProps.mproductDetail.publisher.id)
+            this.props.productActions.getNameAuthorByID(nextProps.mproductDetail.authors[0].id)
         }
         if (nextProps.page !== this.props.page) {
             this.props.productActions.getCommentByIDBook(this.props.match.params.id)
