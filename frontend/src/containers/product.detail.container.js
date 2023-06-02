@@ -66,14 +66,14 @@ class ProductDetailContainer extends Component {
     trackingCommentProduct(name, email, comment, id_book) {
         trackSelfDescribingEvent({
             event: {
-                schema: 'iglu:com.bookshop/product_action/jsonschema/1-1-0',
+                schema: 'iglu:com.bookshop/product_action/jsonschema/1-0-0',
                 data: {
                     action: "comment",
                     extra: comment
                 }
             },
             context : [{
-                schema: "iglu:com.bookshop/product_context/jsonschema/1-1-0",
+                schema: "iglu:com.bookshop/product_context/jsonschema/1-0-0",
                 data: {
                     product_id: this.props.mproductDetail._id,
                     product_name: this.props.mproductDetail.name,
@@ -86,6 +86,7 @@ class ProductDetailContainer extends Component {
             }
             ]
         })
+        console.log("comment event", comment)
 
         this.props.productActions.submitComment(name, email, comment, id_book)
     }

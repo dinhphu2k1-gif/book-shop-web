@@ -83,7 +83,7 @@ class ContentHome extends Component {
 			event: {
 				schema: 'iglu:com.bookshop/search_action/jsonschema/1-0-0',
 				data: {
-					action: "category",
+					action: "search_category",
 					search_value: category.name,
 				}
 			}
