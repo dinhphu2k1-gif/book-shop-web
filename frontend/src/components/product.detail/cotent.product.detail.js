@@ -169,7 +169,7 @@ class ContentProductDetail extends Component {
               <div className="product-details">
                 <div className="col-sm-5">
                   <div className="view-product">
-                    <img src={this.props.mproductDetail.img} alt="" />
+                    <img src={this.props.mproductDetail.urlImage} alt="" />
                   </div>
                  
                 </div>
@@ -215,10 +215,8 @@ class ContentProductDetail extends Component {
                       <b>Category:</b> {this.props.nameCategory}
                     </p>
                     <p>
-                      <b>Release date </b>{" "}
-                      {new Date(
-                        this.props.mproductDetail.release_date
-                      ).toDateString("yyyy-MM-dd")}
+                      <b>Release date: </b>{this.props.mproductDetail.releaseDate.replaceAll("/", "-")}
+                       
                     </p>
                     <p>
                       <b>Publisher:</b> {this.props.namePublicsher}
@@ -300,63 +298,7 @@ class ContentProductDetail extends Component {
                       </div>
                     </div>
                   </div>
-             
-                <div className="recommended_items">
-                  <h2 className="title text-center">recommended items</h2>
-
-                  <div
-                    id="recommended-item-carousel"
-                    className="carousel slide"
-                    data-ride="carousel"
-                  >
-                    <div className="carousel-inner">
-                      <div className="item active">
-                        {this.props.bookrelated.map((element, index) => {
-                          return (
-                            <div className="col-sm-4">
-                              <div className="product-image-wrapper">
-                                <div className="single-products">
-                                  <div className="productinfo text-center">
-                                    <a href={"/product/" + element._id}>
-                                      <img src={element.img} alt="" />
-                                      <h2>  {new Intl.NumberFormat('de-DE', {currency: 'EUR' }).format(element.price)}<sup>đ</sup></h2>
-                                      <p>{element.describe}</p>{" "}
-                                    </a>
-                                    <button
-                                      onClick={() => {
-                                        element.count = 1;
-                                        this.props.addToCart(element);
-                                      }}
-                                      type="button"
-                                      className="btn btn-default add-to-cart"
-                                    >
-                                      <i className="fa fa-shopping-cart" />Add
-                                      to cart
-                                    </button>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                    <a
-                      className="left recommended-item-control"
-                      href="#recommended-item-carousel"
-                      data-slide="prev"
-                    >
-                      <i className="fa fa-angle-left" />
-                    </a>
-                    <a
-                      className="right recommended-item-control"
-                      href="#recommended-item-carousel"
-                      data-slide="next"
-                    >
-                      <i className="fa fa-angle-right" />
-                    </a>
-                  </div>
-                </div>
+            
               </div>
             </div>
           </div>

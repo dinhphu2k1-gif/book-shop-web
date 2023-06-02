@@ -1,11 +1,19 @@
 import { userTypes } from '../constants/action.types'
 import storeConfig from '../config/storage.config'
+import jwt_decode from "jwt-decode";
 import axios from 'axios'
 import { BACKEND_PORT } from '../config/application.config'
 
 export const loginSuccess = (token, userId) => async (dispatch, getState) => {
     storeConfig.setUserId(userId)
     storeConfig.setToken(token)
+    var decodedToken = jwt_decode(token);
+    const user = {
+        email: decodedToken.email,
+        id: decodedToken.user_id,
+        phone_number: decodedToken.phone_number
+    }
+    storeConfig.setUser(user)
     dispatch(setLoginSuccess())
     
     let cart = storeConfig.getCart()

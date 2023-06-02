@@ -1,11 +1,12 @@
 import axios from 'axios'
 import { homeTypes, sortTypes } from '../constants/action.types'
 import { BACKEND_PORT } from '../config/application.config'
+import { range } from 'lodash'
 
 export const getCategory = () => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.get(`http://localhost:${BACKEND_PORT}/category`)
+        res = await axios.get(`http://localhost:8180/all/category`)
     }
     catch (err) {
         return
@@ -16,7 +17,7 @@ export const getCategory = () => async (dispatch, getState) => {
 export const getPublisher = () => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.get(`http://localhost:${BACKEND_PORT}/publisher`)
+        res = await axios.get(`http://localhost:8180/all/publisher`)
     }
     catch (err) {
         return
@@ -27,7 +28,7 @@ export const getPublisher = () => async (dispatch, getState) => {
 export const getAuthor = () => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.get(`http://localhost:${BACKEND_PORT}/author`)
+        res = await axios.get(`http://localhost:8180/all/author`)
     }
     catch (err) {
         return
@@ -64,31 +65,29 @@ export const getBook = () => async (dispatch, getState) => {
         sortorder = '1'
     }
     let branch = getState().homeReducers.book.branch
-    let _link = `http://localhost:${BACKEND_PORT}/book/allbook`
+    let _link = `http://localhost:8180/book/`+ getState().homeReducers.book.page  + "?"
     if (branch === 'category') {
-        _link = `http://localhost:${BACKEND_PORT}/book/category`
+        _link = `http://localhost:/8180/book/` + getState().homeReducers.book.page + "?categoryId=" +  getState().homeReducers.book.id
     } else if (branch === 'publisher') {
-        _link = `http://localhost:${BACKEND_PORT}/book/publisher`
+        _link = `http://localhost:8180/book`
     } else if (branch === 'author') {
-        _link = `http://localhost:${BACKEND_PORT}/book/author`
+        _link = `http://localhost:8180/book`
     }
-    let res
+
+    if(getState().homeReducers.range !== undefined){
+        _link = _link + "&low=" + getState().homeReducers.range.low + "&high=" + getState().homeReducers.range.high 
+    }
+    let res 
     try {
-        res = await axios.post(_link, {
-            page: getState().homeReducers.book.page,
-            range: null,
-            sorttype: sorttype,
-            sortorder: sortorder,
-            searchtext: getState().homeReducers.book.searchtext,
-            id: getState().homeReducers.book.id
+        res = await axios.get(_link, {
         })
     }
     catch (err) {
         console.log(err.response)
         return
     }
-    dispatch(setBook(res.data.data))
-    dispatch(setTotalPage(res.data.totalPage))
+    dispatch(setBook(res.data.data.books))
+    dispatch(setTotalPage(res.data.data.totalPage))
 }
 
 export const setBook = (data) => ({
@@ -166,32 +165,28 @@ export const setSortType = (sortType) => async (dispatch, getState) => {
     }
     dispatch(setSort(sortType, sortorder))
     let branch = getState().homeReducers.book.branch
-    let _link = `http://localhost:${BACKEND_PORT}/book/allbook`
+    let _link = `http://localhost:8180/book/`+ getState().homeReducers.book.page  + "?"
     if (branch === 'category') {
-        _link = `http://localhost:${BACKEND_PORT}/book/category`
+        _link = `http://localhost:8180/book/` + getState().homeReducers.book.page + "?categoryId=" +  getState().homeReducers.book.id
     } else if (branch === 'publisher') {
-        _link = `http://localhost:${BACKEND_PORT}/book/publisher`
+        _link = `http://localhost:8180/book`
     } else if (branch === 'author') {
-        _link = `http://localhost:${BACKEND_PORT}/book/author`
+        _link = `http://localhost:8180/book`
+    }
+    if(getState().homeReducers.range !== undefined){
+        _link = _link + "&low=" + getState().homeReducers.range.low + "&high=" + getState().homeReducers.range.high 
     }
     let res
     try {
-        res = await axios.post(_link, {
-            page: 1,
-            range: getState().homeReducers.book.range,
-            sorttype: sorttype,
-            sortorder: sortorder,
-            searchtext: getState,
-            id: getState().homeReducers.book.id,
-            searchtext: undefined
+        res = await axios.get(_link, {
         })
     }
     catch (err) {
         console.log(err.response)
         return
     }
-    dispatch(setBook(res.data.data))
-    dispatch(setTotalPage(res.data.totalPage))
+    dispatch(setBook(res.data.data.books))
+    dispatch(setTotalPage(res.data.data.totalPage))
 }
 export const setSort = (sortType) => ({
     type: homeTypes.SET_SORT_TYPE,
@@ -228,23 +223,21 @@ export const setRangeType = (range) => async (dispatch, getState) => {
         sortorder = '1'
     }
     let branch = getState().homeReducers.book.branch
-    let _link = `http://localhost:${BACKEND_PORT}/book/allbook`
+    let _link = `http://localhost:8180/book/`+ getState().homeReducers.book.page + "?"
     if (branch === 'category') {
-        _link = `http://localhost:${BACKEND_PORT}/book/category`
+        _link = `http://localhost:8180/book/` + getState().homeReducers.book.page + "?categoryId=" +  getState().homeReducers.book.id
     } else if (branch === 'publisher') {
-        _link = `http://localhost:${BACKEND_PORT}/book/publisher`
+        _link = `http://localhost:8180/book`
     } else if (branch === 'author') {
-        _link = `http://localhost:${BACKEND_PORT}/book/author`
+        _link = `http://localhost:8180/book`
+    }
+
+    if(range !== undefined){
+        _link = _link + "&low=" + range.low + "&high=" + range.high 
     }
     let res
     try {
-        res = await axios.post(_link, {
-            page: 1,
-            range: range,
-            sorttype: sorttype,
-            sortorder: sortorder,
-            id: getState().homeReducers.book.id,
-            searchtext: getState().homeReducers.book.searchtext
+        res = await axios.get(_link, {
         })
     }
     catch (err) {
@@ -253,8 +246,8 @@ export const setRangeType = (range) => async (dispatch, getState) => {
     }
     console.log(JSON.stringify(res))
     dispatch(setRange(range))
-    dispatch(setBook(res.data.data))
-    dispatch(setTotalPage(res.data.totalPage))
+    dispatch(setBook(res.data.data.books))
+    dispatch(setTotalPage(res.data.data.totalPage))
 }
 
 export const setRange = (range) => ({
@@ -275,31 +268,30 @@ export const setSearchText = (searchtext) => ({
 })
 
 export const branchClick = (branch, id) => async (dispatch, getState) => {
-    let _link = `http://localhost:${BACKEND_PORT}/book/allbook`
+    let _link = `http://localhost:8180/book/`+ getState().homeReducers.book.page  + "?"
     if (branch === 'category') {
-        _link = `http://localhost:${BACKEND_PORT}/book/category`
+        _link = `http://localhost:8180/book/` + getState().homeReducers.book.page + "?categoryId=" +  getState().homeReducers.book.id
     } else if (branch === 'publisher') {
-        _link = `http://localhost:${BACKEND_PORT}/book/publisher`
+        _link = `http://localhost:8180/book`
     } else if (branch === 'author') {
-        _link = `http://localhost:${BACKEND_PORT}/book/author`
+        _link = `http://localhost:8180/book`
     }
     let res
+
+    if(getState().homeReducers.range !== undefined){
+        _link = _link + "&low=" + getState().homeReducers.range.low + "&high=" + getState().homeReducers.range.high 
+    }
+
     try {
-        res = await axios.post(_link, {
-            page: 1,
-            range: undefined,
-            sorttype: undefined,
-            sortorder: undefined,
-            id: id,
-            searchtext: undefined
+        res = await axios.get(_link, {
         })
     }
     catch (err) {
         return
     }
     dispatch(setSearchText(''))
-    dispatch(setBook(res.data.data))
-    dispatch(setTotalPage(res.data.totalPage))
+    dispatch(setBook(res.data.data.books))
+    dispatch(setTotalPage(res.data.data.totalPage))
 }
 
 export const getSearchText = () => (dispatch, getState) => {
@@ -337,29 +329,30 @@ export const searchTextSubmit = () => async (dispatch, getState) => {
         sortorder = '1'
     }
     let branch = getState().homeReducers.book.branch
-    let _link = `http://localhost:${BACKEND_PORT}/book/allbook`
+    let _link = `http://localhost:8180/book/`+ getState().homeReducers.book.page  + "?"
     if (branch === 'category') {
-        _link = `http://localhost:${BACKEND_PORT}/book/category`
+        _link = `http://localhost:8180/book/` + getState().homeReducers.book.page + "?categoryId=" +  getState().homeReducers.book.id
     } else if (branch === 'publisher') {
-        _link = `http://localhost:${BACKEND_PORT}/book/publisher`
+        _link = `http://localhost:8180/book`
     } else if (branch === 'author') {
-        _link = `http://localhost:${BACKEND_PORT}/book/author`
+        _link = `http://localhost:8180/book`
+    }
+
+    if(getState().homeReducers.range !== undefined){
+        _link = _link + "&low=" + getState().homeReducers.range.low + "&high=" + getState().homeReducers.range.high 
+    }
+    if(getState().homeReducers.book.searchtext !== undefined){   
+        _link = _link + "&keyword=" + getState().homeReducers.book.searchtext 
     }
     let res
     try {
-        res = await axios.post(_link, {
-            page: 1,
-            range: getState().homeReducers.book.range,
-            sorttype: sorttype,
-            sortorder: sortorder,
-            id: getState().homeReducers.book.id,
-            searchtext: getState().homeReducers.book.searchtext
+        res = await axios.get(_link, {
         })
     }
     catch (err) {
         console.log(err.response)
         return
     }
-    dispatch(setBook(res.data.data))
-    dispatch(setTotalPage(res.data.totalPage))
+    dispatch(setBook(res.data.data.books))
+    dispatch(setTotalPage(res.data.data.totalPage))
 } 
