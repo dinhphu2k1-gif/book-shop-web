@@ -35,14 +35,13 @@ exports.getUser = () => {
 
     return JSON.parse(localStorage.getItem('user'))
 }
+exports.setUserId = (userId) => {
+    localStorage.setItem('user_id', userId)
+}
 exports.getUserId = () => {
-    let user = this.getUser();
-    if (user == null) {
+    if (localStorage.getItem('user_id') === null)
         return null
-    }
-
-    // console.log("user", user)
-    return user.id
+    return localStorage.getItem('user_id')
 }
 
 exports.clear = () => {
@@ -63,7 +62,7 @@ exports.addProductToCart = (product) => {
     } else {
         cart = []
     }
-    let index = cart.findIndex(element => product._id === element._id)
+    let index = cart.findIndex(element => product.id === element.id)
     if (index === -1) {
         cart = [...cart, product]
     } else {
@@ -76,7 +75,7 @@ exports.updateProductInCart = (product) => {
     if (cart === null) {
         return false
     }
-    let index = cart.findIndex(element => product._id === element._id)
+    let index = cart.findIndex(element => product.id === element.id)
     if (index === -1) {
         return false
     } else {
@@ -90,7 +89,7 @@ exports.deteleProductInCart = (id_product) => {
     if (cart === null) {
         return false
     }
-    let index = cart.findIndex(element => id_product === element._id)
+    let index = cart.findIndex(element => id_product === element.id)
     if (index === -1) {
         return false
     } else {

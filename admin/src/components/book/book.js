@@ -1,5 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { BACKEND_PORT } from "../../config/application.config";
+require('dotenv').config();
+
+const BACKEND_HOST = process.env.BACKEND_HOST || 'localhost'
+
 class Book extends Component {
   constructor() {
     super();
@@ -40,8 +45,9 @@ class Book extends Component {
       this.setState({ pagination: tmp });
     }
     if (nextProps.book !== null) {
+      console.log(nextProps.book)
       this.setState({
-        imagePreviewUrl: nextProps.book.img
+        imagePreviewUrl: nextProps.urlImage
       });
     }
     if (nextProps.isadd === true) {
@@ -88,14 +94,34 @@ class Book extends Component {
   handleChangeImg = img => {
     if (img === undefined)
       return
-    let reader = new FileReader();
-    reader.onloadend = () => {
-      this.setState({
-        file: img,
-        img: reader.result
-      });
-    };
-    reader.readAsDataURL(img);
+    
+    const formData = new FormData();
+    formData.append("file", img)  
+    console.log("start-fetch")
+    fetch(`http://${BACKEND_HOST}:${BACKEND_PORT}/upload`, {
+      method: 'POST',
+      headers: {
+        'accept': '*/*',
+        "Access-Control-Allow-Origin": "*",
+      },
+      body: formData,
+      credentials: "same-origin",
+    })
+        .then(response => {
+          return response.json()
+        })
+        .then(data => {
+          if(data.code == 200){
+            this.setState({
+              img: data.data,
+              file: data.data
+            })
+          }
+        })
+        .catch((error) => {
+          console.log("error: " + error)
+        });
+    console.log("end fetch")
   };
   invalidPrice = t => {
     var str = t.toString();
@@ -197,6 +223,7 @@ class Book extends Component {
         noti: ""
       });
     }
+
     this.props.addBook(
       id_category,
       name,
@@ -373,7 +400,7 @@ class Book extends Component {
             onClick={() =>
               this.setState({
                 category: element.name,
-                id_category: element._id
+                id_category: element. id
               })
             }
           >
@@ -391,7 +418,7 @@ class Book extends Component {
         return (
           <li
             onClick={() =>
-              this.setState({ author: element.name, id_author: element._id })
+              this.setState({ author: element.name, id_author: element.id })
             }
           >
             <a>{element.name}</a>
@@ -408,7 +435,7 @@ class Book extends Component {
         return (
           <li
             onClick={() =>
-              this.setState({ publisher: element.name, id_nsx: element._id })
+              this.setState({ publisher: element.name, id_nsx: element.id })
             }
           >
             <a>{element.name}</a>
@@ -421,18 +448,18 @@ class Book extends Component {
   };
   getNameCategoryByID = id => {
     for (let i = 0; i < this.props.category.length; i++) {
-      if (id === this.props.category[i]._id) return this.props.category[i].name;
+      if (id === this.props.category[i].id) return this.props.category[i].name;
     }
   };
   getNameAuthorByID = id => {
     for (let i = 0; i < this.props.author.length; i++) {
-      if (id === this.props.author[i]._id) return this.props.author[i].name;
+      if (id === this.props.author[i].id) return this.props.author[i].name;
     }
   };
   getNamePublisherByID = id => {
     for (let i = 0; i < this.props.publisher.length; i++) {
-      console.log(id + " === " + this.props.publisher[i]._id);
-      if (id === this.props.publisher[i]._id)
+      console.log(id + " === " + this.props.publisher[i].id);
+      if (id === this.props.publisher[i].id)
         return this.props.publisher[i].name;
     }
   };
@@ -485,10 +512,11 @@ class Book extends Component {
                     console.log("element: ", element)
                     return (
                       <tr>
+
                         <td>{element.name}</td>
-                        <td>{element.release_date.slice(0, 10)}</td>
+                        <td>{element.releaseDate.replaceAll("/", "-")}</td>
                         <td>{element.price}</td>
-                        <td style={{ width: "40%" }}>{element.describe}</td>
+                        <td style={{ width: "40%" }}>{element.description}</td>
                         <td>
                           <div className="btn-group">
                             <a
@@ -496,26 +524,23 @@ class Book extends Component {
                                 this.setState({
                                   curr: "update",
                                   name: element.name,
-                                  release_date: element.release_date.slice(
-                                    0,
-                                    10
-                                  ),
+                                  release_date: element.releaseDate.replaceAll("/", "-"),
                                   price: element.price,
-                                  describe: element.describe,
+                                  describe: element.description,
                                   category: this.getNameCategoryByID(
-                                    element.id_category
+                                    element.categories[0].id
                                   ),
-                                  id_category: element.id_category,
-                                  id_author: element.id_author,
-                                  id_nsx: element.id_nsx,
+                                  id_category: element.categories[0].id,
+                                  id_author: element.authors[0].id,
+                                  id_nsx: element.publisher.id,
                                   author: this.getNameAuthorByID(
-                                    element.id_author
+                                    element.authors[0].id
                                   ),
                                   publisher: this.getNamePublisherByID(
-                                    element.id_nsx
+                                    element.publisher.id
                                   ),
-                                  img: element.img,
-                                  id: element._id
+                                  img: element.urlImage,
+                                  id: element.id
                                 })
                               }
                               className="btn btn-success"
@@ -523,7 +548,7 @@ class Book extends Component {
                               <i className="icon_check_alt2" />
                             </a>
                             <a
-                              onClick={() => this.props.deleteBook(element._id)}
+                              onClick={() => this.props.deleteBook(element.id)}
                               className="btn btn-danger"
                             >
                               <i className="icon_close_alt2" />

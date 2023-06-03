@@ -109,8 +109,8 @@ class ContentHome extends Component {
 													this.resetCheck()
 													this.props.setTitle(element.name);
 													this.props.setBranch("category");
-													this.props.setIDBranch(element._id);
-													this.props.branchClick("category", element._id);
+													this.props.setIDBranch(element.id);
+													this.props.branchClick("category", element.id);
 												}}
 												className="panel panel-default"
 											>
@@ -130,7 +130,7 @@ class ContentHome extends Component {
 										<div className="radio">
 											<label
 												onClick={() => {
-													this.props.setRangeType(null);
+													this.props.setRangeType({ low: 0, high: 100000000 });
 													this.resetCheck();
 													this.setState({ check_1: true });
 												}}
@@ -145,7 +145,7 @@ class ContentHome extends Component {
 										<div className="radio">
 											<label
 												onClick={() => {
-													this.props.setRangeType({ low: 0, high: 50000 });
+													this.props.setRangeType({ low: 0, high: 100000 });
 													this.resetCheck();
 													this.setState({ check_2: true });
 												}}
@@ -154,13 +154,13 @@ class ContentHome extends Component {
 													type="radio"
 													name="optradio"
 													checked={this.state.check_2}
-												/>0 ---- 50.000
+												/>0 ---- 100.000
 											</label>
 										</div>
 										<div className="radio ">
 											<label
 												onClick={() => {
-													this.props.setRangeType({ low: 50000, high: 100000 });
+													this.props.setRangeType({ low: 100000, high: 500000 });
 													this.resetCheck();
 													this.setState({ check_3: true });
 												}}
@@ -169,7 +169,7 @@ class ContentHome extends Component {
 													type="radio"
 													name="optradio"
 													checked={this.state.check_3}
-												/>50.000 ---- 100.000
+												/>100.000 ---- 500.000
 											</label>
 										</div>
 										<div className="radio ">
@@ -177,30 +177,14 @@ class ContentHome extends Component {
 												onClick={() => {
 													this.resetCheck();
 													this.setState({ check_4: true });
-													this.props.setRangeType({ low: 100000, high: 150000 });
+													this.props.setRangeType({ low: 500000, high: 2000000 });
 												}}
 											>
 												<input
 													type="radio"
 													name="optradio"
 													checked={this.state.check_4}
-												/>100.000 ---- 150.000
-											</label>
-										</div>
-										<div className="radio ">
-											<label
-												onClick={() => {
-													this.props.setRangeType({ low: 150000, high: 1500000 });
-													this.resetCheck();
-													this.setState({ check_5: true });
-												}}
-											>
-												<input
-													type="radio"
-													name="optradio"
-													checked={this.state.check_5}
-												/>{">= 150.000"}
-
+												/>{">= 500000"}
 											</label>
 										</div>
 									</div>
@@ -217,10 +201,10 @@ class ContentHome extends Component {
 									return (
 										<ProductItem
 											book={element}
-											urlImg={element.img}
+											urlImg={element.urlImage}
 											price={element.price}
 											describe={element.describe}
-											id={element._id}
+											id={element.id}
 											name={element.name}
 											addToCart={product => this.props.addToCart(product)}
 										/>

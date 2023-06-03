@@ -8,17 +8,14 @@ const BACKEND_HOST = process.env.BACKEND_HOST || 'localhost'
 export const getBook = () => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/book/allbook`, {
-            page: getState().bookReducers.book.page,
-            range: null
-        })
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/book/` + getState().bookReducers.book.page)
     }
     catch (err) {
         console.log(err)
         return
     }
-    dispatch(setBook(res.data.data))
-    dispatch(setTotalPage(res.data.totalPage))
+    dispatch(setBook(res.data.data.books))
+    dispatch(setTotalPage(res.data.data.totalPage))
 }
 export const setBook = (data) => ({
     type: bookTypes.SET_BOOK,
@@ -72,37 +69,69 @@ export const deleteBook = (id) => async(dispatch, getState) => {
 export const getCategory = () => async (dispatch, getState) =>  {
     let res
     try {
-        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/category/all/` + getState().bookReducers.category.page)
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/category/` + getState().bookReducers.category.page)
+    }
+    catch (err) {
+        return
+    }
+    dispatch(setCategory(res.data.data.categories))
+    dispatch(categorySetTotalPage(res.data.data.totalPage))
+}
+export const getAllCategory = () => async (dispatch, getState) =>  {
+    let res
+    try {
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/all/category/`)
     }
     catch (err) {
         return
     }
     dispatch(setCategory(res.data.data))
-    dispatch(categorySetTotalPage(res.data.totalPage))
 }
 
 export const getPublisher = () => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/publisher/all/` + getState().bookReducers.publisher.page)
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/publisher/` + getState().bookReducers.publisher.page)
+    }
+    catch (err) {
+        return
+    }
+    dispatch(setPublisher(res.data.data.publishers))
+    dispatch(publisherSetTotalPage(res.data.data.totalPage))
+}
+
+export const getAllPublisher = () => async (dispatch, getState) => {
+    let res
+    try {
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/all/publisher/`)
     }
     catch (err) {
         return
     }
     dispatch(setPublisher(res.data.data))
-    dispatch(publisherSetTotalPage(res.data.totalPage))
 }
 
 export const getAuthor = () => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/author/all/` + getState().bookReducers.author.page)
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/author/` + getState().bookReducers.author.page)
+    }
+    catch(err) {
+        return
+    }
+    dispatch(setAuthor(res.data.data.authors))
+    dispatch(authorSetTotalPage(res.data.data.totalPage))
+}
+
+export const getAllAuthor = () => async (dispatch, getState) => {
+    let res
+    try {
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/all/author/`)
     }
     catch(err) {
         return
     }
     dispatch(setAuthor(res.data.data))
-    dispatch(authorSetTotalPage(res.data.totalPage))
 }
 
 export const setCategory = (data) => ({
@@ -138,7 +167,7 @@ export const addCategory =  (name) => async (dispatch, getState) => {
     dispatch(resetCategory())
     let res
     try {
-        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/admin/addcategory`, {
+        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/category`, {
             name: name
         })
     }
@@ -153,7 +182,7 @@ export const addCategory =  (name) => async (dispatch, getState) => {
 export const updateCategory =  (id, name) => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/admin/updatecategory`, {
+        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/category`, {
             id: id,
             name: name
         })
@@ -184,7 +213,7 @@ export const addAuthor =  (name) => async (dispatch, getState) => {
     dispatch(resetAuthor())
     let res
     try {
-        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/admin/addauthor`, {
+        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/author`, {
             name: name
         })
     }
@@ -199,8 +228,7 @@ export const addAuthor =  (name) => async (dispatch, getState) => {
 export const updateAuthor =  (id, name) => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/admin/updateauthor`, {
-            id: id,
+        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/author/` + id, {
             name: name
         })
     }
@@ -230,7 +258,7 @@ export const addPublisher =  (name) => async (dispatch, getState) => {
     dispatch(resetPublisher())
     let res
     try {
-        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/admin/addpublisher`, {
+        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/publisher`, {
             name: name
         })
     }
@@ -245,7 +273,7 @@ export const addPublisher =  (name) => async (dispatch, getState) => {
 export const updatePublisher =  (id, name) => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/admin/updatepublisher`, {
+        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/publisher/` + id, {
             id: id,
             name: name
         })
@@ -341,23 +369,36 @@ export const updateBookFail = () => ({
 })
 export const addBook = (id_category, name, price, release_date, describe, id_nsx, id_author, file) =>
  async (dispatch, getState) => {
-    let data = new FormData()
-    data.append('file', file)
-    data.append('id_category', id_category) 
-    data.append('name', name) 
-    data.append('price', price)  
-    data.append('release_date', release_date)
-    data.append('describe', describe)
-    data.append('id_nsx', id_nsx)
-    data.append('id_author', id_author)
-    let res
-    try {
-        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/admin/addbook`, data)
-    }
-    catch(err) {
-        dispatch(addBookFail())
-        return
-    } 
+    const dateStr = release_date.toString().replaceAll("-", "/")
+    console.log(dateStr)
+    fetch(`http://${BACKEND_HOST}:${BACKEND_PORT}/book`, {
+        method: 'POST',
+        headers: {
+            'accept': '*/*',
+            'Content-Type': 'application/json',
+            "Access-Control-Allow-Origin": "*",
+        },
+        body: JSON.stringify({
+            authorIds: id_author,
+            categoryIds: id_category,
+            description: describe,
+            name: name,
+            price: price,
+            publisherId: parseInt(id_nsx),
+            releaseDate: dateStr,
+            urlImage: file
+        }),
+        credentials: "same-origin",
+    })
+        .then(response => {
+            return response.json()
+        })
+        .then(data => {
+            console.log("hello")
+        })
+        .catch((error) => {
+            dispatch(addBookFail())
+        })
     dispatch(addBookSuccess())
     dispatch(getBook())
 }

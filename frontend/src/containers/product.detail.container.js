@@ -27,9 +27,9 @@ class ProductDetailContainer extends Component {
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps.mproductDetail !== null) {
-            this.props.productActions.getNameCategoryByID(nextProps.mproductDetail.id_category)
-            this.props.productActions.getNamePubliserByID(nextProps.mproductDetail.id_nsx)
-            this.props.productActions.getNameAuthorByID(nextProps.mproductDetail.id_author)
+            this.props.productActions.getNameCategoryByID(nextProps.mproductDetail.categories[0].id)
+            this.props.productActions.getNamePubliserByID(nextProps.mproductDetail.publisher.id)
+            this.props.productActions.getNameAuthorByID(nextProps.mproductDetail.authors[0].id)
         }
         if (nextProps.page !== this.props.page) {
             this.props.productActions.getCommentByIDBook(this.props.match.params.id)
@@ -63,7 +63,7 @@ class ProductDetailContainer extends Component {
         this.props.productActions.addToCart(product)
     }
 
-    trackingCommentProduct(name, email, comment, id_book) {
+    trackingCommentProduct(user_id, comment, id) {
         trackSelfDescribingEvent({
             event: {
                 schema: 'iglu:com.bookshop/product_action/jsonschema/1-0-0',
@@ -88,7 +88,7 @@ class ProductDetailContainer extends Component {
         })
         console.log("comment event", comment)
 
-        this.props.productActions.submitComment(name, email, comment, id_book)
+        this.props.productActions.submitComment(user_id, comment, id)
     }
 
     render() {
@@ -109,7 +109,7 @@ class ProductDetailContainer extends Component {
                         bookrelated={this.props.bookrelated}
                         logout={() => this.props.actions.logout()}
                         id_book={this.props.match.params.id}
-                        submitComment={(name, email, comment, id_book) => this.trackingCommentProduct(name, email, comment, id_book)}
+                        submitComment={(user_id, comment, id) => this.trackingCommentProduct(user_id, comment, id)}
                         comment={this.props.comment}
                         nameAuthor={this.props.nameAuthor}
                         addToCart={(product) => this.trackingAddProductToCart(product)}
