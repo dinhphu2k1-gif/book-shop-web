@@ -133,7 +133,7 @@ export const auth = () => async (dispatch, getState) => {
         dispatch(setLoginFail())
         return false
     }
-    let user_id = storeConfig.getUserId()
+    let user_id = storeConfig.getUser()
     let token = storeConfig.getToken()
     let res
     try {

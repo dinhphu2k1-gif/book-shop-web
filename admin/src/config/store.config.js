@@ -31,6 +31,7 @@ exports.getUser = () => {
         
     return JSON.parse(localStorage.getItem('user'))
 }
+
 exports.clear = () => {
     localStorage.clear()
 }

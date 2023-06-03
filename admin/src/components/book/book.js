@@ -1,5 +1,10 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { BACKEND_PORT } from "../../config/application.config";
+require('dotenv').config();
+
+const BACKEND_HOST = process.env.BACKEND_HOST || 'localhost'
+
 class Book extends Component {
   constructor() {
     super();
@@ -93,7 +98,7 @@ class Book extends Component {
     const formData = new FormData();
     formData.append("file", img)  
     console.log("start-fetch")
-    fetch("http://localhost:8180/upload", {
+    fetch(`http://${BACKEND_HOST}:${BACKEND_PORT}/upload`, {
       method: 'POST',
       headers: {
         'accept': '*/*',
