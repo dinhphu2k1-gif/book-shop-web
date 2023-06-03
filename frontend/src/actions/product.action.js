@@ -38,7 +38,7 @@ export const getNameCategoryByID = (id) => async (dispatch) => {
 export const getNamePubliserByID = (id) => async (dispatch) => {
     let res
     try {
-        res = await axios.get(`http://localhost:${BACKEND_PORT}/publisher/name/` + id)
+        res = await axios.get(`http://localhost:8180/detail/publisher/` + id)
     }
     catch (err) {
         return
@@ -50,7 +50,7 @@ export const getNamePubliserByID = (id) => async (dispatch) => {
 export const getNameAuthorByID = (id) => async (dispatch) => {
     let res
     try {
-        res = await axios.get(`http://localhost:${BACKEND_PORT}/author/name/` + id)
+        res = await axios.get(`http://localhost:8180/detail/author/` + id)
     }
     catch (err) {
         return
