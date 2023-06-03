@@ -95,7 +95,6 @@ class ContentProductDetail extends Component {
     } else {
       this.setState({ notificationComment: "" });
     }
-    console.log("content product details", this.props)
 
     this.props.submitComment(
       this.state.user_id,

@@ -45,7 +45,7 @@ class HomeContainer extends React.Component {
                 event: {
                     schema: 'iglu:com.bookshop/search_action/jsonschema/1-0-0',
                     data: {
-                        action: "text",
+                        action: "search_text",
                         search_value: searchText
                     }
                 }
@@ -60,7 +60,7 @@ class HomeContainer extends React.Component {
             event: {
                 schema: 'iglu:com.bookshop/search_action/jsonschema/1-0-0',
                 data: {
-                    action: "price",
+                    action: "search_price",
                     search_value: JSON.stringify(range)
                 }
             }

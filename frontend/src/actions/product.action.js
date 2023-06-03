@@ -38,7 +38,7 @@ export const getNameCategoryByID = (id) => async (dispatch) => {
 export const getNamePubliserByID = (id) => async (dispatch) => {
     let res
     try {
-        res = await axios.get(`http://localhost:8180/detail/publisher/` + id)
+        res = await axios.get(`http://localhost:${BACKEND_PORT}/publisher/name/` + id)
     }
     catch (err) {
         return
@@ -50,7 +50,7 @@ export const getNamePubliserByID = (id) => async (dispatch) => {
 export const getNameAuthorByID = (id) => async (dispatch) => {
     let res
     try {
-        res = await axios.get(`http://localhost:8180/detail/author/` + id)
+        res = await axios.get(`http://localhost:${BACKEND_PORT}/author/name/` + id)
     }
     catch (err) {
         return
@@ -140,7 +140,7 @@ export const addToCart = (product) => async (dispatch, getState) => {
     if (getState().userReducers.login.islogin) {
         let res
         try {
-            const link = "http://localhost:8180/cart/add?userId=" + storeConfig.getUserId() + "&quantity=" + product.count + "&bookId=" + product.id 
+            const link = "http://localhost:8180/cart/add?userId=" + storeConfig.getUserId() + "&quantity=" + product.count + "&bookId=" + product.id
             res = await axios.get(link, {
             })
         }

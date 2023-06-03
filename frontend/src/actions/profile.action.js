@@ -2,12 +2,16 @@ import axios from 'axios'
 import storeConfig from '../config/storage.config'
 import { profileTypes } from '../constants/action.types'
 import { BACKEND_PORT } from '../config/application.config'
+require('dotenv').config();
+
+const BACKEND_HOST = process.env.BACKEND_HOST || 'localhost'
 
 export const auth = () => async (dispatch, getState) => {
     if(storeConfig.getUserId() === null){
         dispatch(setAuthFail())
         return false
     }
+    const user = storeConfig.getUser()
     try {
         await axios.post(`http://localhost:8180/auth`, {
             userId: storeConfig.getUserId(),
@@ -40,7 +44,7 @@ export const resetProfile = () => ({
 export const updateInfor = (email, firstName, lastName, address, phone_number ) => async (dispatch, getState) => {
     let res
     try {
-            res =  await axios.post(`http://localhost:${BACKEND_PORT}/user/updateinfor`, {
+            res =  await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/user/updateinfor`, {
             email: email,
             firstName: firstName,
             lastName: lastName,
