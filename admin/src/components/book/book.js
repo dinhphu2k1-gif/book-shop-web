@@ -93,7 +93,7 @@ class Book extends Component {
     const formData = new FormData();
     formData.append("file", img)  
     console.log("start-fetch")
-    fetch("http://localhost:8180/upload", {
+    fetch("http://${BACKEND_HOST}:${BACKEND_PORT}/upload", {
       method: 'POST',
       headers: {
         'accept': '*/*',

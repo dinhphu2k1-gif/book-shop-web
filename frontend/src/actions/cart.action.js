@@ -11,7 +11,7 @@ export const getCart = () => async (dispatch, getState) => {
     let id_user = storeConfig.getUserId()
     let res
     try {
-        res = await axios.get(`http://localhost:8180/cart?userId=` + id_user)
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/cart?userId=` + id_user)
     }
     catch (err) {
         console.log(err)
@@ -24,7 +24,7 @@ export const getCart = () => async (dispatch, getState) => {
 }
 export const updateProductInCart = (product, quantity) => async (dispatch, getState) => {
     try {
-        let link = "http://localhost:8180/cart/add?userId=" + storeConfig.getUserId() + "&bookId=" + product.id + "&quantity=" + quantity
+        let link = "http://${BACKEND_HOST}:${BACKEND_PORT}/cart/add?userId=" + storeConfig.getUserId() + "&bookId=" + product.id + "&quantity=" + quantity
         await axios.get(link, {
         })
     }
@@ -35,7 +35,7 @@ export const updateProductInCart = (product, quantity) => async (dispatch, getSt
 }
 export const deteleProductInCart = (product) => async (dispatch, getState) => {
     try {
-        let link = "http://localhost:8180/cart/add?userId=" + storeConfig.getUserId() + "&bookId=" + product.id + "&quantity=" + -product.quantity
+        let link = "http://${BACKEND_HOST}:${BACKEND_PORT}/cart/add?userId=" + storeConfig.getUserId() + "&bookId=" + product.id + "&quantity=" + -product.quantity
         await axios.get(link, {
         })
     }
@@ -58,7 +58,7 @@ export const resetPayment = () => ({
 export const payment = (address, phone, name, total) => async (dispatch, getState) => {
     let res = null
     try {
-        res = await axios.post(`http://localhost:8180/bill?userId=` + storeConfig.getUserId() , {
+        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/bill?userId=` + storeConfig.getUserId() , {
             address: address,
             phone: phone,
             name: name

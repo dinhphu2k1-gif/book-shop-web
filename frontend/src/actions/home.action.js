@@ -8,7 +8,7 @@ const BACKEND_HOST = process.env.BACKEND_HOST || 'localhost'
 export const getCategory = () => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.get(`http://localhost:8180/all/category`)
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/all/category`)
     }
     catch (err) {
         return
@@ -19,7 +19,7 @@ export const getCategory = () => async (dispatch, getState) => {
 export const getPublisher = () => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.get(`http://localhost:8180/all/publisher`)
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/all/publisher`)
     }
     catch (err) {
         return
@@ -30,7 +30,7 @@ export const getPublisher = () => async (dispatch, getState) => {
 export const getAuthor = () => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.get(`http://localhost:8180/all/author`)
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/all/author`)
     }
     catch (err) {
         return
@@ -67,13 +67,13 @@ export const getBook = () => async (dispatch, getState) => {
         sortorder = '1'
     }
     let branch = getState().homeReducers.book.branch
-    let _link = `http://localhost:8180/book/`+ getState().homeReducers.book.page  + "?"
+    let _link = `http://${BACKEND_HOST}:${BACKEND_PORT}/book/`+ getState().homeReducers.book.page  + "?"
     if (branch === 'category') {
-        _link = `http://localhost:8180/book/` + getState().homeReducers.book.page + "?categoryId=" +  getState().homeReducers.book.id
+        _link = `http://${BACKEND_HOST}:${BACKEND_PORT}/book/` + getState().homeReducers.book.page + "?categoryId=" +  getState().homeReducers.book.id
     } else if (branch === 'publisher') {
-        _link = `http://localhost:8180/book`
+        _link = `http://${BACKEND_HOST}:${BACKEND_PORT}/book`
     } else if (branch === 'author') {
-        _link = `http://localhost:8180/book`
+        _link = `http://${BACKEND_HOST}:${BACKEND_PORT}/book`
     }
     let res
 
@@ -168,13 +168,13 @@ export const setSortType = (sortType) => async (dispatch, getState) => {
     }
     dispatch(setSort(sortType, sortorder))
     let branch = getState().homeReducers.book.branch
-    let _link = `http://localhost:8180/book/`+ getState().homeReducers.book.page  + "?"
+    let _link = `http://${BACKEND_HOST}:${BACKEND_PORT}/book/`+ getState().homeReducers.book.page  + "?"
     if (branch === 'category') {
-        _link = `http://localhost:8180/book/` + getState().homeReducers.book.page + "?categoryId=" +  getState().homeReducers.book.id
+        _link = `http://${BACKEND_HOST}:${BACKEND_PORT}/book/` + getState().homeReducers.book.page + "?categoryId=" +  getState().homeReducers.book.id
     } else if (branch === 'publisher') {
-        _link = `http://localhost:8180/book`
+        _link = `http://${BACKEND_HOST}:${BACKEND_PORT}/book`
     } else if (branch === 'author') {
-        _link = `http://localhost:8180/book`
+        _link = `http://${BACKEND_HOST}:${BACKEND_PORT}/book`
     }
     let res
 
@@ -228,13 +228,13 @@ export const setRangeType = (range) => async (dispatch, getState) => {
         sortorder = '1'
     }
     let branch = getState().homeReducers.book.branch
-    let _link = `http://localhost:8180/book/`+ getState().homeReducers.book.page + "?"
+    let _link = `http://${BACKEND_HOST}:${BACKEND_PORT}/book/`+ getState().homeReducers.book.page + "?"
     if (branch === 'category') {
-        _link = `http://localhost:8180/book/` + getState().homeReducers.book.page + "?categoryId=" +  getState().homeReducers.book.id
+        _link = `http://${BACKEND_HOST}:${BACKEND_PORT}/book/` + getState().homeReducers.book.page + "?categoryId=" +  getState().homeReducers.book.id
     } else if (branch === 'publisher') {
-        _link = `http://localhost:8180/book`
+        _link = `http://${BACKEND_HOST}:${BACKEND_PORT}/book`
     } else if (branch === 'author') {
-        _link = `http://localhost:8180/book`
+        _link = `http://${BACKEND_HOST}:${BACKEND_PORT}/book`
     }
 
     if(range !== undefined){
@@ -275,13 +275,13 @@ export const setSearchText = (searchtext) => ({
 })
 
 export const branchClick = (branch, id) => async (dispatch, getState) => {
-    let _link = `http://localhost:8180/book/`+ getState().homeReducers.book.page  + "?"
+    let _link = `http://${BACKEND_HOST}:${BACKEND_PORT}/book/`+ getState().homeReducers.book.page  + "?"
     if (branch === 'category') {
-        _link = `http://localhost:8180/book/` + getState().homeReducers.book.page + "?categoryId=" +  getState().homeReducers.book.id
+        _link = `http://${BACKEND_HOST}:${BACKEND_PORT}/book/` + getState().homeReducers.book.page + "?categoryId=" +  getState().homeReducers.book.id
     } else if (branch === 'publisher') {
-        _link = `http://localhost:8180/book`
+        _link = `http://${BACKEND_HOST}:${BACKEND_PORT}/book`
     } else if (branch === 'author') {
-        _link = `http://localhost:8180/book`
+        _link = `http://${BACKEND_HOST}:${BACKEND_PORT}/book`
     }
     let res
 
@@ -336,13 +336,13 @@ export const searchTextSubmit = () => async (dispatch, getState) => {
         sortorder = '1'
     }
     let branch = getState().homeReducers.book.branch
-    let _link = `http://localhost:8180/book/`+ getState().homeReducers.book.page  + "?"
+    let _link = `http://${BACKEND_HOST}:${BACKEND_PORT}/book/`+ getState().homeReducers.book.page  + "?"
     if (branch === 'category') {
-        _link = `http://localhost:8180/book/` + getState().homeReducers.book.page + "?categoryId=" +  getState().homeReducers.book.id
+        _link = `http://${BACKEND_HOST}:${BACKEND_PORT}/book/` + getState().homeReducers.book.page + "?categoryId=" +  getState().homeReducers.book.id
     } else if (branch === 'publisher') {
-        _link = `http://localhost:8180/book`
+        _link = `http://${BACKEND_HOST}:${BACKEND_PORT}/book`
     } else if (branch === 'author') {
-        _link = `http://localhost:8180/book`
+        _link = `http://${BACKEND_HOST}:${BACKEND_PORT}/book`
     }
 
     if(getState().homeReducers.range !== undefined){

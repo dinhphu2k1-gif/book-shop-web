@@ -72,7 +72,7 @@ class LoginRegisterContainer extends Component {
         } else {
             this.setState({ notificationRegister: '' })
         }
-        fetch("http://localhost:8180/user", {
+        fetch("http://${BACKEND_HOST}:${BACKEND_PORT}/user", {
             method: 'POST',
             headers: {
                 'accept': '*/*',
@@ -111,7 +111,7 @@ class LoginRegisterContainer extends Component {
         }
         let res
         try {
-            res = await axios.post(`http://localhost:8180/login`, {
+            res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/login`, {
                 email: this.state.emailLogin,
                 password: this.state.passwordLogin,
             })

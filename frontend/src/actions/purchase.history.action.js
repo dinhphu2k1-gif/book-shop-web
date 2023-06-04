@@ -19,7 +19,7 @@ export const getPurchaseHitory = (status) => async (dispatch, getState) => {
 
     }
     try {
-        res = await axios.get(`http://localhost:8180/bill?userId=` + userId + "&status=" + status)
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/bill?userId=` + userId + "&status=" + status)
     }
     catch (err) {
         console.log(err)
@@ -30,7 +30,7 @@ export const getPurchaseHitory = (status) => async (dispatch, getState) => {
 export const deleteBill = (id) => async (dispatch, getState) => {
     let res = null;
     try {
-        res = await axios.delete(`http://localhost:8180/bill/` + id)
+        res = await axios.delete(`http://${BACKEND_HOST}:${BACKEND_PORT}/bill/` + id)
     }
     catch (err) {
         console.log(err.response)

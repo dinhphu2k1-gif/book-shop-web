@@ -134,7 +134,7 @@ export const auth = () => async (dispatch, getState) => {
     let token = storeConfig.getToken()
     let res
     try {
-        res = await axios.post(`http://localhost:8180/auth`, {
+        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/auth`, {
             userId: user_id,
             token: token,
         })

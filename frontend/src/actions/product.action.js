@@ -6,7 +6,7 @@ import { BACKEND_PORT } from '../config/application.config'
 export const getBookDetail = (id) => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.get(`http://localhost:8180/detail/book/` + id)
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/detail/book/` + id)
     }
     catch (err) {
         return
@@ -17,7 +17,7 @@ export const getBookDetail = (id) => async (dispatch, getState) => {
 export const getBookRelated = (id) => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.get(`http://localhost:8180/detail/book/` + id)
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/detail/book/` + id)
     }
     catch (err) {
         return
@@ -27,7 +27,7 @@ export const getBookRelated = (id) => async (dispatch, getState) => {
 export const getNameCategoryByID = (id) => async (dispatch) => {
     let res
     try {
-        res = await axios.get(`http://localhost:8180/detail/category/` + id)
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/detail/category/` + id)
     }
     catch (err) {
         return
@@ -38,7 +38,7 @@ export const getNameCategoryByID = (id) => async (dispatch) => {
 export const getNamePubliserByID = (id) => async (dispatch) => {
     let res
     try {
-        res = await axios.get(`http://localhost:8180/detail/publisher/` + id)
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/detail/publisher/` + id)
     }
     catch (err) {
         return
@@ -50,7 +50,7 @@ export const getNamePubliserByID = (id) => async (dispatch) => {
 export const getNameAuthorByID = (id) => async (dispatch) => {
     let res
     try {
-        res = await axios.get(`http://localhost:8180/detail/author/` + id)
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/detail/author/` + id)
     }
     catch (err) {
         return
@@ -84,7 +84,7 @@ export const setNameAuthor = (name) => ({
 export const submitComment = (user_id, comment, id_book) => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.post(`http://localhost:8180/comment`, {
+        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/comment`, {
             book_id: id_book,
             content: comment,
             user_id: user_id
@@ -121,7 +121,7 @@ export const nextPage = () => (dispatch, getState) => {
 export const getCommentByIDBook = (id) => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.get(`http://localhost:8180/comment?bookId=` + id + "&page=" + getState().productReducers.product.page, {
+        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/comment?bookId=` + id + "&page=" + getState().productReducers.product.page, {
             })
     }
     catch (err) {
@@ -140,7 +140,7 @@ export const addToCart = (product) => async (dispatch, getState) => {
     if (getState().userReducers.login.islogin) {
         let res
         try {
-            const link = "http://localhost:8180/cart/add?userId=" + storeConfig.getUserId() + "&quantity=" + product.count + "&bookId=" + product.id
+            const link = "http://${BACKEND_HOST}:${BACKEND_PORT}/cart/add?userId=" + storeConfig.getUserId() + "&quantity=" + product.count + "&bookId=" + product.id
             res = await axios.get(link, {
             })
         }

@@ -23,7 +23,7 @@ class LoginContainer extends Component {
     }
     let res;
     try {
-      res = await axios.post(`http://localhost:8180/admin/login`, {
+      res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/admin/login`, {
         email: email,
         password: password
       });
