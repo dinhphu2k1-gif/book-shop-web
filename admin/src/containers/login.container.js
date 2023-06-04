@@ -6,10 +6,6 @@ import * as userActions from "../actions/user.action";
 import Login from "../components/login/login";
 import  { Redirect } from 'react-router-dom'
 import { BACKEND_PORT } from "../config/application.config";
-import jwt_decode from 'jwt-decode'
-require('dotenv').config();
-
-const BACKEND_HOST = process.env.BACKEND_HOST || 'localhost'
 
 class LoginContainer extends Component {
   constructor(props) {
@@ -27,7 +23,7 @@ class LoginContainer extends Component {
     }
     let res;
     try {
-      res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/admin/login`, {
+      res = await axios.post(`http://localhost:8180/admin/login`, {
         email: email,
         password: password
       });

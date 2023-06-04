@@ -14,66 +14,43 @@ import { trackSelfDescribingEvent } from '@snowplow/browser-tracker';
 class CartContainer extends Component {
 	constructor() {
 		super();
-		this.state = {
-			contextArray : []
-		}
 	}
 	componentWillMount() {
 		this.props.actions.auth()
 		this.props.cartActions.getCart()
 	}
 
-	async getProductContext() {
-		const cart = this.props.cart
-
-		cart.forEach(async (element, index) => {
+	async trackingPurchase(address, phone, name, total) {
+		let cart = this.props.cart
+		cart.map(async (element, index) => {
 			// var category = await this.props.productActions.getNameCategoryByID(element.id_category)
 			// var publisher = await this.props.productActions.getNamePubliserByID(element.id_nsx)
 			// var author = await this.props.productActions.getNameAuthorByID(element.id_author)
-			// // debugger
-			// const product_context = {
-			// 	schema: "iglu:com.bookshop/product_context/jsonschema/1-0-0",
-			// 	data: {
-			// 		product_id: element._id,
-			// 		product_name: element.name,
-			// 		quantity: parseInt(element.count),
-			// 		price: element.price,
-			// 		category: category.data.name,
-			// 		publisher: publisher.data.name,
-			// 		author: author.data.name
-			// 	}
-			// }
-			//
-			// this.state.contextArray.push(product_context)
+
+			// trackSelfDescribingEvent({
+			// 	event: {
+			// 		schema: 'iglu:com.bookshop/product_action/jsonschema/1-0-0',
+			// 		data: {
+			// 			action: "purchase"
+			// 		}
+			// 	},
+			// 	context: [{
+			// 		schema: "iglu:com.bookshop/product_context/jsonschema/1-0-0",
+			// 		data: {
+			// 			product_id: element._id,
+			// 			product_name: element.name,
+			// 			quantity: parseInt(element.count),
+			// 			price: element.price,
+			// 			category: category.data.name,
+			// 			publisher: publisher.data.name,
+			// 			author: author.data.name
+			// 		}
+			// 	}]
+			// })
 		})
-	}
 
-	async trackingPurchase(address, phone, name, total) {
-		this.getProductContext()
-
-		setTimeout(async () => {
-			console.log("context array", this.state.contextArray)
-			if (Array.isArray(this.state.contextArray)) {
-				// Use the length property on contextArray
-				console.log("Length of contextArray:", this.state.contextArray.length);
-			  } else {
-				console.log("contextArray is not an array.");
-			  }
-
-			trackSelfDescribingEvent({
-				event: {
-					schema: 'iglu:com.bookshop/product_action/jsonschema/1-0-0',
-					data: {
-						action: "purchase"
-					}
-				},
-				context: this.state.contextArray
-			})
-
-
-			let bill = await this.props.cartActions.payment(address, phone, name, total)
-			console.log("bill", bill)
-		}, 1000)
+		let bill = await this.props.cartActions.payment(address, phone, name, total)
+		console.log("bill", bill)
 	}
 
 	async trackingDeleteProduct(product) {
@@ -81,7 +58,7 @@ class CartContainer extends Component {
 		// var category = await this.props.productActions.getNameCategoryByID(product.id_category)
 		// var publisher = await this.props.productActions.getNamePubliserByID(product.id_nsx)
 		// var author = await this.props.productActions.getNameAuthorByID(product.id_author)
-		//
+
 		// trackSelfDescribingEvent({
 		// 	event: {
 		// 		schema: 'iglu:com.bookshop/product_action/jsonschema/1-0-0',

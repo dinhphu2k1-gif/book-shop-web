@@ -1,14 +1,11 @@
 import axios from 'axios'
 import { bookTypes } from '../constants/action.types'
 import { BACKEND_PORT } from '../config/application.config'
-require('dotenv').config();
-
-const BACKEND_HOST = process.env.BACKEND_HOST || 'localhost'
 
 export const getBook = () => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/book/` + getState().bookReducers.book.page)
+        res = await axios.get(`http://localhost:8180/book/` + getState().bookReducers.book.page)
     }
     catch (err) {
         console.log(err)
@@ -56,7 +53,7 @@ export const publisherSetTotalPage = (totalpage) => ({
 export const deleteBook = (id) => async(dispatch, getState) => {
     let res
     try {
-        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/admin/deletebook/` +id)
+        res = await axios.get(`http://localhost:${BACKEND_PORT}/admin/deletebook/` +id)
     }
     catch (err) {
         console.log(err)
@@ -69,7 +66,7 @@ export const deleteBook = (id) => async(dispatch, getState) => {
 export const getCategory = () => async (dispatch, getState) =>  {
     let res
     try {
-        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/category/` + getState().bookReducers.category.page)
+        res = await axios.get(`http://localhost:8180/category/` + getState().bookReducers.category.page)
     }
     catch (err) {
         return
@@ -80,7 +77,7 @@ export const getCategory = () => async (dispatch, getState) =>  {
 export const getAllCategory = () => async (dispatch, getState) =>  {
     let res
     try {
-        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/all/category/`)
+        res = await axios.get(`http://localhost:8180/all/category/`)
     }
     catch (err) {
         return
@@ -88,10 +85,11 @@ export const getAllCategory = () => async (dispatch, getState) =>  {
     dispatch(setCategory(res.data.data))
 }
 
+
 export const getPublisher = () => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/publisher/` + getState().bookReducers.publisher.page)
+        res = await axios.get(`http://localhost:8180/publisher/` + getState().bookReducers.publisher.page)
     }
     catch (err) {
         return
@@ -103,7 +101,7 @@ export const getPublisher = () => async (dispatch, getState) => {
 export const getAllPublisher = () => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/all/publisher/`)
+        res = await axios.get(`http://localhost:8180/all/publisher/`)
     }
     catch (err) {
         return
@@ -111,10 +109,11 @@ export const getAllPublisher = () => async (dispatch, getState) => {
     dispatch(setPublisher(res.data.data))
 }
 
+
 export const getAuthor = () => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/author/` + getState().bookReducers.author.page)
+        res = await axios.get(`http://localhost:8180/author/` + getState().bookReducers.author.page)
     }
     catch(err) {
         return
@@ -126,7 +125,7 @@ export const getAuthor = () => async (dispatch, getState) => {
 export const getAllAuthor = () => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.get(`http://${BACKEND_HOST}:${BACKEND_PORT}/all/author/`)
+        res = await axios.get(`http://localhost:8180/all/author/`)
     }
     catch(err) {
         return
@@ -167,7 +166,7 @@ export const addCategory =  (name) => async (dispatch, getState) => {
     dispatch(resetCategory())
     let res
     try {
-        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/category`, {
+        res = await axios.post(`http://localhost:8180/category`, {
             name: name
         })
     }
@@ -182,7 +181,7 @@ export const addCategory =  (name) => async (dispatch, getState) => {
 export const updateCategory =  (id, name) => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/category`, {
+        res = await axios.put(`http://localhost:8180/category`, {
             id: id,
             name: name
         })
@@ -213,7 +212,7 @@ export const addAuthor =  (name) => async (dispatch, getState) => {
     dispatch(resetAuthor())
     let res
     try {
-        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/author`, {
+        res = await axios.post(`http://localhost:8180/author`, {
             name: name
         })
     }
@@ -228,7 +227,7 @@ export const addAuthor =  (name) => async (dispatch, getState) => {
 export const updateAuthor =  (id, name) => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/author/` + id, {
+        res = await axios.put(`http://localhost:8180/author/` + id, {
             name: name
         })
     }
@@ -258,7 +257,7 @@ export const addPublisher =  (name) => async (dispatch, getState) => {
     dispatch(resetPublisher())
     let res
     try {
-        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/publisher`, {
+        res = await axios.post(`http://localhost:8180/publisher`, {
             name: name
         })
     }
@@ -273,7 +272,7 @@ export const addPublisher =  (name) => async (dispatch, getState) => {
 export const updatePublisher =  (id, name) => async (dispatch, getState) => {
     let res
     try {
-        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/publisher/` + id, {
+        res = await axios.post(`http://localhost:8180/publisher/` + id, {
             id: id,
             name: name
         })
@@ -371,7 +370,7 @@ export const addBook = (id_category, name, price, release_date, describe, id_nsx
  async (dispatch, getState) => {
     const dateStr = release_date.toString().replaceAll("-", "/")
     console.log(dateStr)
-    fetch(`http://${BACKEND_HOST}:${BACKEND_PORT}/book`, {
+    fetch("http://localhost:8180/book   ", {
         method: 'POST',
         headers: {
             'accept': '*/*',
@@ -415,7 +414,7 @@ export const updateBook = (id, name, id_category, price, release_date, describe,
     data.append('id_author', id_author)
     let res
     try {
-        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/admin/updatebook`, data)
+        res = await axios.post(`http://localhost:${BACKEND_PORT}/admin/updatebook`, data)
     }
     catch(err) {
         dispatch(updateBookFail())
@@ -437,12 +436,12 @@ export const billSetTotalPage = (totalpage) => ({
     totalpage
 })
 export const getBill = (status) => async(dispatch, getState) => {
-    let link = `http://${BACKEND_HOST}:${BACKEND_PORT}/bill/status/99`
+    let link = `http://localhost:${BACKEND_PORT}/bill/status/99`
     if(status === "0") {
-        link = `http://${BACKEND_HOST}:${BACKEND_PORT}/bill/status/0`
+        link = `http://localhost:${BACKEND_PORT}/bill/status/0`
     }
     if(status === "1") {
-        link = `http://${BACKEND_HOST}:${BACKEND_PORT}/bill/status/1`
+        link = `http://localhost:${BACKEND_PORT}/bill/status/1`
     }
     let res = null
     try {
@@ -466,7 +465,7 @@ export const updateIssend = (name,id) => async (dispatch, getState) => {
     let res
     try {
         console.log(typeof name);
-        res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/bill/updateissend`, {
+        res = await axios.post(`http://localhost:${BACKEND_PORT}/bill/updateissend`, {
         name: name,
         id:id
         })

@@ -11,8 +11,9 @@ export const auth = () => async (dispatch, getState) => {
         dispatch(setAuthFail())
         return false
     }
+    const user = storeConfig.getUser()
     try {
-        await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/auth`, {
+        await axios.post(`http://localhost:8180/auth`, {
             userId: storeConfig.getUserId(),
             token: storeConfig.getToken(),
         })

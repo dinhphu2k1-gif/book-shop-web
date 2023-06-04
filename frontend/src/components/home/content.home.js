@@ -130,7 +130,7 @@ class ContentHome extends Component {
 										<div className="radio">
 											<label
 												onClick={() => {
-													this.props.setRangeType({ low: 0, high: 100000000 });
+													this.props.setRangeType({low:0, high: 2000000});
 													this.resetCheck();
 													this.setState({ check_1: true });
 												}}

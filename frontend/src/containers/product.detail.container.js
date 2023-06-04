@@ -87,7 +87,7 @@ class ProductDetailContainer extends Component {
             ]
         })
         console.log("comment event", comment)
-
+        console.log(user_id)
         this.props.productActions.submitComment(user_id, comment, id)
     }
 
@@ -109,7 +109,7 @@ class ProductDetailContainer extends Component {
                         bookrelated={this.props.bookrelated}
                         logout={() => this.props.actions.logout()}
                         id_book={this.props.match.params.id}
-                        submitComment={(user_id, comment, id) => this.trackingCommentProduct(user_id, comment, id)}
+                        submitComment={(user_id, comment, id_book) => this.trackingCommentProduct(user_id, comment, id_book)}
                         comment={this.props.comment}
                         nameAuthor={this.props.nameAuthor}
                         addToCart={(product) => this.trackingAddProductToCart(product)}

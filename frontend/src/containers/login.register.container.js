@@ -3,14 +3,10 @@ import axios from 'axios'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import LoginRegister from '../components/login.register/login.register'
+import jwt_decode from "jwt-decode";
 import * as userActions from '../actions/user.action'
 import * as homeActions from '../actions/home.action'
 import { BACKEND_PORT } from '../config/application.config'
-import jwt_decode from 'jwt-decode'
-require('dotenv').config();
-
-const BACKEND_HOST = process.env.BACKEND_HOST || 'localhost'
-
 class LoginRegisterContainer extends Component {
     constructor(props) {
         super(props)
@@ -70,20 +66,20 @@ class LoginRegisterContainer extends Component {
         } else {
             this.setState({ notificationRegister: '' })
         }
-        if (!this.isvalidName(this.state.username)) {
+        if (!this.isvalidName(this.state.name)) {
             this.setState({ notificationRegister: 'Name invalid' })
             return
         } else {
             this.setState({ notificationRegister: '' })
         }
-        fetch(`http://${BACKEND_HOST}:${BACKEND_PORT}/user`, {
+        fetch("http://localhost:8180/user", {
             method: 'POST',
             headers: {
                 'accept': '*/*',
                 'Content-Type': 'application/json',
                 "Access-Control-Allow-Origin": "*",
             },
-            body: JSON.stringify({
+            body: JSON.stringify({ 
                 email: this.state.email,
                 password: this.state.password,
                 name: this.state.username,
@@ -115,7 +111,7 @@ class LoginRegisterContainer extends Component {
         }
         let res
         try {
-            res = await axios.post(`http://${BACKEND_HOST}:${BACKEND_PORT}/login`, {
+            res = await axios.post(`http://localhost:8180/login`, {
                 email: this.state.emailLogin,
                 password: this.state.passwordLogin,
             })
