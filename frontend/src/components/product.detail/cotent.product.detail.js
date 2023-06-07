@@ -85,6 +85,10 @@ class ContentProductDetail extends Component {
     }
   }
   submitComment = () => {
+    if(this.state.user_id == null){
+      alert("Bạn cần đăng nhập để bình luận")
+      return
+    }
     if (this.state.user_id === undefined){
       this.setState({ notificationComment: "Bạn cần đăng nhập để bình luận" });
     }
