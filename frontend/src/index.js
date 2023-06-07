@@ -47,6 +47,8 @@ let store = createStore(
     applyMiddleware(...middleware)
 )
 
+console.log("user", storeConfig.getUser())
+
 let user_id = storeConfig.getUser() == null ? null : storeConfig.getUser().id
 let user_name = storeConfig.getUser() == null ? null : storeConfig.getUser().firstName + " " + storeConfig.getUser().lastName
 let phone_number = storeConfig.getUser() == null ? null : storeConfig.getUser().phone_number

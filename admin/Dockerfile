@@ -1,8 +1,5 @@
 FROM node
 
-# install 
-RUN apt update
-
 WORKDIR /book-shop-web/admin/
 
 ADD . /book-shop-web/admin/
