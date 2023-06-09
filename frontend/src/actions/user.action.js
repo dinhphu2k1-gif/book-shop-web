@@ -15,8 +15,10 @@ export const loginSuccess = (token, userId) => async (dispatch, getState) => {
         email: decodedToken.email,
         id: decodedToken.user_id,
         phone_number: decodedToken.phone_number,
-        username: decodedToken.username
+        username: decodedToken.username,
+        address: decodedToken.address,
     }
+    console.log(user.username)
     storeConfig.setUser(user)
     dispatch(setLoginSuccess())
     
