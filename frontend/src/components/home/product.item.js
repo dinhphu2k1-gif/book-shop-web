@@ -14,20 +14,26 @@ class ProductItem extends Component {
         // this.history = useHistory();
     }
 
-    async trackingViewProduct() {
-        // e.preventDefault();
-        // e.stopPropagation()
-        // e.stopImmediatePropagation()
+
+    trackingViewProduct() {
         let book = this.props.book
 
-        // comment cho m sua id
-        // var category = await this.props.productActions.getNameCategoryByID(book.id_category)
-        var category = this.props.book.categories[0]
-		// var publisher = await this.props.productActions.getNamePubliserByID(book.id_nsx)
-        var publisher = this.props.book.publisher
-		// var author = await this.props.productActions.getNameAuthorByID(book.id_author)
-        var author = this.props.book.authors[0]
-        console.log("category", category)
+        var category = book.categories[0]
+        var publisher = book.publisher
+        var author = book.authors[0]
+
+        var product_context = {
+            schema: "iglu:com.bookshop/product_context/jsonschema/1-0-0",
+            data: {
+                product_id: book.id, // comment cho m sua id
+                product_name: book.name,
+                quantity: 0,
+                price: book.price,
+                category_id: category.id,
+                publisher_id: publisher.id,
+                author_id: author.id
+            }
+        }
 
         trackSelfDescribingEvent({
             event: {
@@ -36,38 +42,25 @@ class ProductItem extends Component {
                     action: "view"
                 }
             },
-            context : [{
-                schema: "iglu:com.bookshop/product_context/jsonschema/1-0-0",
-                data: {
-                    product_id: book.id, // comment cho m sua id
-                    product_name: book.name,
-                    quantity: 0,
-                    price: book.price,
-					category: category.name,
-					publisher: publisher.name,
-					author: author.name
-                }
-            }
-            ]
+            context: [product_context]
         })
 
-        console.log("send event")
         history.push('/product/' + this.props.id);
     }
 
     render() {
-        console.log("props", this.props)
+        console.log("book", this.props.book)
         return (
             <div className="col-sm-4">
                 <div className="product-image-wrapper">
                     <div className="single-products">
                         <div className="productinfo text-center"
                         >
-                            <div style={{cursor: "pointer"}} onClick={() => this.trackingViewProduct()}><img src={this.props.urlImg} alt="" /></div>
-                            <div style={{cursor: "pointer"}} onClick={() => this.trackingViewProduct()}><h4 className='name-product'>{this.props.name}</h4></div>
+                            <div style={{ cursor: "pointer" }} onClick={() => this.trackingViewProduct()}><img src={this.props.urlImg} alt="" /></div>
+                            <div style={{ cursor: "pointer" }} onClick={() => this.trackingViewProduct()}><h4 className='name-product'>{this.props.name}</h4></div>
                             <div className='product-content'>
                                 <h2>Giá:</h2>
-                                <div style={{cursor: "pointer"}} onClick={() => this.trackingViewProduct()}><h2>{new Intl.NumberFormat('de-DE', { currency: 'EUR' }).format(this.props.price)}<sup>đ</sup></h2></div>
+                                <div style={{ cursor: "pointer" }} onClick={() => this.trackingViewProduct()}><h2>{new Intl.NumberFormat('de-DE', { currency: 'EUR' }).format(this.props.price)}<sup>đ</sup></h2></div>
                             </div>
                         </div>
                     </div>
@@ -78,12 +71,12 @@ class ProductItem extends Component {
 }
 
 const mapStateToProps = state => ({
-	islogin: state.userReducers.login.islogin,
+    islogin: state.userReducers.login.islogin,
 });
 
 const mapDispatchToProps = dispatch => {
-	return {
-		productActions: bindActionCreators(productActions, dispatch),
-	};
+    return {
+        productActions: bindActionCreators(productActions, dispatch),
+    };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(ProductItem);

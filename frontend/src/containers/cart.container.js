@@ -49,7 +49,8 @@ class CartContainer extends Component {
 	}
 
 	async trackingPurchase(address, phone, name, total) {
-		this.getProductContext()
+		// this.getProductContext()
+		console.log("cart", this.props)
 
 		setTimeout(async () => {
 			console.log("context array", this.state.contextArray)

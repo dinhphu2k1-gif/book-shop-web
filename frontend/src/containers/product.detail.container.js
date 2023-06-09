@@ -37,6 +37,24 @@ class ProductDetailContainer extends Component {
     }
 
     trackingAddProductToCart(product) {
+        let book = this.props.bookrelated
+        var category = book.categories[0]
+        var publisher = book.publisher
+        var author = book.authors[0]
+
+        var product_context = {
+            schema: "iglu:com.bookshop/product_context/jsonschema/1-0-0",
+            data: {
+                product_id: book.id, // comment cho m sua id
+                product_name: book.name,
+                quantity: 0,
+                price: book.price,
+                category_id: category.id,
+                publisher_id: publisher.id,
+                author_id: author.id
+            }
+        }
+
         trackSelfDescribingEvent({
             event: {
                 schema: 'iglu:com.bookshop/product_action/jsonschema/1-0-0',
@@ -44,19 +62,7 @@ class ProductDetailContainer extends Component {
                     action: "add"
                 }
             },
-            context : [{
-                schema: "iglu:com.bookshop/product_context/jsonschema/1-0-0",
-                data: {
-                    product_id: this.props.mproductDetail._id,
-                    product_name: this.props.mproductDetail.name,
-                    quantity: parseInt(product.count),
-                    price: this.props.mproductDetail.price,
-                    category: this.props.nameCategory,
-                    publisher: this.props.namePublicsher,
-                    author: this.props.nameAuthor
-                }
-            }
-            ]
+            context: [product_context]
         })
 
         // add product to cart
@@ -64,6 +70,24 @@ class ProductDetailContainer extends Component {
     }
 
     trackingCommentProduct(user_id, comment, id) {
+        let book = this.props.bookrelated
+        var category = book.categories[0]
+        var publisher = book.publisher
+        var author = book.authors[0]
+
+        var product_context = {
+            schema: "iglu:com.bookshop/product_context/jsonschema/1-0-0",
+            data: {
+                product_id: book.id, // comment cho m sua id
+                product_name: book.name,
+                quantity: 0,
+                price: book.price,
+                category_id: category.id,
+                publisher_id: publisher.id,
+                author_id: author.id
+            }
+        }
+
         trackSelfDescribingEvent({
             event: {
                 schema: 'iglu:com.bookshop/product_action/jsonschema/1-0-0',
@@ -72,21 +96,8 @@ class ProductDetailContainer extends Component {
                     extra: comment
                 }
             },
-            context : [{
-                schema: "iglu:com.bookshop/product_context/jsonschema/1-0-0",
-                data: {
-                    product_id: this.props.mproductDetail._id,
-                    product_name: this.props.mproductDetail.name,
-                    quantity: 0,
-                    price: this.props.mproductDetail.price,
-                    category: this.props.nameCategory,
-                    publisher: this.props.namePublicsher,
-                    author: this.props.nameAuthor
-                }
-            }
-            ]
+            context: [product_context]
         })
-        console.log("comment event", comment)
 
         this.props.productActions.submitComment(user_id, comment, id)
     }
