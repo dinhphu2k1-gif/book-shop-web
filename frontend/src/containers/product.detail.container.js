@@ -47,7 +47,7 @@ class ProductDetailContainer extends Component {
             data: {
                 product_id: book.id, // comment cho m sua id
                 product_name: book.name,
-                quantity: 0,
+                quantity: parseInt(product.count),
                 price: book.price,
                 category_id: category.id,
                 publisher_id: publisher.id,

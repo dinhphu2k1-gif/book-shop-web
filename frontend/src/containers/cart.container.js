@@ -14,9 +14,6 @@ import { trackSelfDescribingEvent } from '@snowplow/browser-tracker';
 class CartContainer extends Component {
 	constructor() {
 		super();
-		this.state = {
-			contextArray : []
-		}
 	}
 	componentWillMount() {
 		this.props.actions.auth()
@@ -50,59 +47,78 @@ class CartContainer extends Component {
 
 	async trackingPurchase(address, phone, name, total) {
 		// this.getProductContext()
-		console.log("cart", this.props)
+		console.log("cart", this.props.cart)
+		let cart = this.props.cart
 
-		setTimeout(async () => {
-			console.log("context array", this.state.contextArray)
-			if (Array.isArray(this.state.contextArray)) {
-				// Use the length property on contextArray
-				console.log("Length of contextArray:", this.state.contextArray.length);
-			  } else {
-				console.log("contextArray is not an array.");
-			  }
+		const contextArray = []
+		cart.forEach((element, index) => {
+			var category = element.categories[0]
+			var publisher = element.publisher
+			var author = element.authors[0]
 
-			trackSelfDescribingEvent({
-				event: {
-					schema: 'iglu:com.bookshop/product_action/jsonschema/1-0-0',
-					data: {
-						action: "purchase"
-					}
-				},
-				context: this.state.contextArray
-			})
+			var product_context = {
+				schema: "iglu:com.bookshop/product_context/jsonschema/1-0-0",
+				data: {
+					product_id: element.id, // comment cho m sua id
+					product_name: element.name,
+					quantity: element.quantity,
+					price: element.price,
+					category_id: category.id,
+					publisher_id: publisher.id,
+					author_id: author.id
+				}
+			}
+
+			contextArray.push(product_context)
+		})
+
+		console.log("context array", contextArray)
 
 
-			let bill = await this.props.cartActions.payment(address, phone, name, total)
-			console.log("bill", bill)
-		}, 1000)
+		trackSelfDescribingEvent({
+			event: {
+				schema: 'iglu:com.bookshop/product_action/jsonschema/1-0-0',
+				data: {
+					action: "purchase"
+				}
+			},
+			context: contextArray
+		})
+
+		let bill = await this.props.cartActions.payment(address, phone, name, total)
 	}
 
 	async trackingDeleteProduct(product) {
 		console.log("cart container", product)
-		// var category = await this.props.productActions.getNameCategoryByID(product.id_category)
-		// var publisher = await this.props.productActions.getNamePubliserByID(product.id_nsx)
-		// var author = await this.props.productActions.getNameAuthorByID(product.id_author)
-		//
-		// trackSelfDescribingEvent({
-		// 	event: {
-		// 		schema: 'iglu:com.bookshop/product_action/jsonschema/1-0-0',
-		// 		data: {
-		// 			action: "remove"
-		// 		}
-		// 	},
-		// 	context: [{
-		// 		schema: "iglu:com.bookshop/product_context/jsonschema/1-0-0",
-		// 		data: {
-		// 			product_id: product._id,
-		// 			product_name: product.name,
-		// 			quantity: parseInt(product.count),
-		// 			price: product.price,
-		// 			category: category.data.name,
-		// 			publisher: publisher.data.name,
-		// 			author: author.data.name
-		// 		}
-		// 	}]
-		// })
+
+        var category = product.categories[0]
+        var publisher = product.publisher
+        var author = product.authors[0]
+
+        var product_context = {
+            schema: "iglu:com.bookshop/product_context/jsonschema/1-0-0",
+            data: {
+                product_id: product.id, // comment cho m sua id
+                product_name: product.name,
+                quantity: 0,
+                price: product.price,
+                category_id: category.id,
+                publisher_id: publisher.id,
+                author_id: author.id
+            }
+        }
+
+		console.log("product_context", product_context)
+
+		trackSelfDescribingEvent({
+			event: {
+				schema: 'iglu:com.bookshop/product_action/jsonschema/1-0-0',
+				data: {
+					action: "remove"
+				}
+			},
+			context: [product_context]
+		})
 
 		this.props.cartActions.deteleProductInCart(product)
 	}
@@ -117,7 +133,7 @@ class CartContainer extends Component {
 				setSearchText={value => this.props.homeActions.setSearchText(value)}
 				history={this.props.history}
 				cart={this.props.cart}
-				updateProductInCart={(product,quantity) => this.props.cartActions.updateProductInCart(product, quantity)}
+				updateProductInCart={(product, quantity) => this.props.cartActions.updateProductInCart(product, quantity)}
 				deteleProductInCart={(product) => this.trackingDeleteProduct(product)}
 
 				payment={(address, phone, name, total) => this.trackingPurchase(address, phone, name, total)}
