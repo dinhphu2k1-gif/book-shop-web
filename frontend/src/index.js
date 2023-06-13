@@ -34,7 +34,7 @@ import { FormTrackingPlugin, enableFormTracking } from '@snowplow/browser-plugin
 import { EcommercePlugin } from '@snowplow/browser-plugin-ecommerce';
 import { addGlobalContexts } from "@snowplow/browser-tracker";
 
-require('dotenv').config();
+// require('dotenv').config();
 
 const middleware = [thunk];
 
