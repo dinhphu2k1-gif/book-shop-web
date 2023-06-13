@@ -4,7 +4,7 @@ import { purchaseHistoryTypes } from '../constants/action.types'
 import { BACKEND_PORT } from '../config/application.config'
 require('dotenv').config();
 
-const BACKEND_HOST = process.env.BACKEND_HOST || 'localhost'
+const BACKEND_HOST = process.env.REACT_APP_BACKEND_HOST || 'localhost'
 
 export const setPurchaseHistory = (data) => ({
     type: purchaseHistoryTypes.SET_PURCHASED_HISTORY,

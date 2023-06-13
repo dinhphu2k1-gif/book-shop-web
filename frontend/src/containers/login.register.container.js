@@ -9,7 +9,7 @@ import { BACKEND_PORT } from '../config/application.config'
 import jwt_decode from 'jwt-decode'
 require('dotenv').config();
 
-const BACKEND_HOST = process.env.BACKEND_HOST || 'localhost'
+const BACKEND_HOST = process.env.REACT_APP_BACKEND_HOST || 'localhost'
 
 class LoginRegisterContainer extends Component {
     constructor(props) {
