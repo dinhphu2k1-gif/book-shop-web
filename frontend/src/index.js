@@ -66,10 +66,11 @@ let user_context = {
 }
 
 const COLLECTOR_HOST = process.env.COLLECTOR_HOST || 'localhost'
-const BACKEND_HOST = process.env.COLLECTOR_HOST || 'localhost'
+const BACKEND_HOST = process.env.BACKEND_HOST || 'localhost'
 
-console.log("backend host", BACKEND_HOST, "\t", process.env.COLLECTOR_HOST)
-console.log("collector host", COLLECTOR_HOST, "\t", process.env.COLLECTOR_HOST)
+console.log(process.env)
+console.log("backend_host", BACKEND_HOST, "\t", process.env.BACKEND_HOST)
+console.log("collector_host", COLLECTOR_HOST, "\t", process.env.COLLECTOR_HOST)
 
 // snowplow
 newTracker("book-shop-tracker", `http://${COLLECTOR_HOST}:8080`, {
