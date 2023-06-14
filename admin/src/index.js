@@ -8,6 +8,8 @@ import App from './containers/App'
 import thunk from 'redux-thunk'
 import reducers from './reducers'
 
+require('dotenv').config()
+
 const middleware = [thunk];
 
 if (process.env.NODE_ENV !== 'production') {
@@ -18,6 +20,8 @@ let store = createStore(
     reducers,
     applyMiddleware(...middleware)
 )
+
+console.log("env", process.env)
 
 render(
     <Provider store={store}>

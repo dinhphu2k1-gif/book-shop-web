@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { BACKEND_PORT } from "../../config/application.config";
 require('dotenv').config();
 
-const BACKEND_HOST = process.env.BACKEND_HOST || 'localhost'
+const BACKEND_HOST = process.env.REACT_APP_BACKEND_HOST || 'localhost'
 
 class Book extends Component {
   constructor() {

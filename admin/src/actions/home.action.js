@@ -3,7 +3,7 @@ import {homeTypes} from '../constants/action.types'
 import { BACKEND_PORT } from '../config/application.config'
 require('dotenv').config();
 
-const BACKEND_HOST = process.env.BACKEND_HOST || 'localhost'
+const BACKEND_HOST = process.env.REACT_APP_BACKEND_HOST || 'localhost'
 
 export const setTopProduct = (data) => ({
     type: homeTypes.SET_TOP_PRODUCT,
