@@ -10,6 +10,7 @@ import CartContainer from './cart.container'
 import VerifyPaymentContainer from './verify.payment.container'
 import HistoryPurchase from './history.purchase.container'
 import history from '../history'
+import RandomEvent from './RandomEvent'
 
 const App = () => (
   <Router history={history}>
@@ -23,6 +24,7 @@ const App = () => (
       <Route exact path='/cart' component={CartContainer} />
       <Route exact path='/payment/:token' component={VerifyPaymentContainer} />
       <Route exact path='/purchase_history' component={HistoryPurchase} />
+      <Route exact path='/random-event' component={RandomEvent} />
     </Switch>
   </Router>
 )
