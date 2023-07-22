@@ -65,6 +65,8 @@ let user_context = {
     }
 }
 
+window.localStorage.setItem("user_context", user_context);
+
 const COLLECTOR_HOST = process.env.REACT_APP_BACKEND_HOST || 'localhost'
 const BACKEND_HOST = process.env.REACT_APP_COLLECTOR_HOST || 'localhost'
 
@@ -97,7 +99,6 @@ newTracker("book-shop-tracker", `http://${COLLECTOR_HOST}:8080`, {
 })
 
 setUserId(getUserId());
-
 addGlobalContexts([user_context]);
 
 enableLinkClickTracking();
