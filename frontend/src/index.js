@@ -65,8 +65,8 @@ let user_context = {
     }
 }
 
-const COLLECTOR_HOST = process.env.REACT_APP_BACKEND_HOST || 'localhost'
-const BACKEND_HOST = process.env.REACT_APP_COLLECTOR_HOST || 'localhost'
+const COLLECTOR_HOST = process.env.REACT_APP_COLLECTOR_HOST || 'localhost'
+const BACKEND_HOST = process.env.REACT_APP_BACKEND_HOST || 'localhost'
 
 console.log(process.env)
 console.log("backend_host", BACKEND_HOST, "\t", process.env.REACT_APP_BACKEND_HOST)
