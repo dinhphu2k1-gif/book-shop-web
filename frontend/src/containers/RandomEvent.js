@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import Loading from '../components/loading/loading'
-import { addGlobalContexts, removeGlobalContexts, trackSelfDescribingEvent } from '@snowplow/browser-tracker';
+import { addGlobalContexts, removeGlobalContexts, trackSelfDescribingEvent, setUserId } from '@snowplow/browser-tracker';
 import { Button } from 'react-bootstrap/lib/InputGroup';
 import { BACKEND_PORT } from '../config/application.config';
+import { getUser, setUser } from '../config/storage.config';
 
 const BACKEND_HOST = process.env.REACT_APP_BACKEND_HOST || 'localhost'
 
@@ -22,8 +23,6 @@ class RandomEvent extends React.Component {
 
     constructor(props) {
         super(props)
-        let user_context = window.localStorage.getItem('user_context');
-        removeGlobalContexts([user_context])
         console.log("remove user_context")
         fetch(`http://${BACKEND_HOST}:${BACKEND_PORT}/all/book`, {
             method: 'GET',
@@ -79,7 +78,8 @@ class RandomEvent extends React.Component {
             }
             i++;
         }
-
+        const id = getUser()
+        setUserId(id)
 
         function trackingActionProduct(index_user, index_book, index_action) {
             console.log(1)
@@ -116,6 +116,7 @@ class RandomEvent extends React.Component {
             }
 
 
+            setUserId(user_context.data.user_id)
             addGlobalContexts([user_context])
             trackSelfDescribingEvent({
                 event: {
@@ -124,7 +125,7 @@ class RandomEvent extends React.Component {
                         action: action[index_action]
                     }
                 },
-                context: [product_context, user_context]
+                context: [product_context]
             })
             removeGlobalContexts([user_context])
         }
