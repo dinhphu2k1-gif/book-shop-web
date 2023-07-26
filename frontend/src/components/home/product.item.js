@@ -4,9 +4,11 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import history from '../../history';
 import { withRouter } from "react-router-dom";
+import { getUserId } from '../../config/storage.config';
 
 // snowplow tracking
 import { trackSelfDescribingEvent } from '@snowplow/browser-tracker';
+import { setUserId } from '@snowplow/browser-tracker';
 
 class ProductItem extends Component {
     constructor(props) {
@@ -35,6 +37,7 @@ class ProductItem extends Component {
             }
         }
 
+        setUserId(getUserId());        
         trackSelfDescribingEvent({
             event: {
                 schema: 'iglu:com.bookshop/product_action/jsonschema/1-0-0',

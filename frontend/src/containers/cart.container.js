@@ -7,9 +7,11 @@ import * as homeActions from "../actions/home.action";
 import * as userActions from "../actions/user.action";
 import * as cartActions from '../actions/cart.action';
 import storeConfig from "../config/storage.config"
+import { getUserId } from "../config/storage.config";
 
 // snowplow tracking
 import { trackSelfDescribingEvent } from '@snowplow/browser-tracker';
+import { setUserId } from "@snowplow/browser-tracker";
 
 class CartContainer extends Component {
 	constructor() {
@@ -74,7 +76,7 @@ class CartContainer extends Component {
 
 		console.log("context array", contextArray)
 
-
+		setUserId(getUserId());
 		trackSelfDescribingEvent({
 			event: {
 				schema: 'iglu:com.bookshop/product_action/jsonschema/1-0-0',
@@ -110,6 +112,7 @@ class CartContainer extends Component {
 
 		console.log("product_context", product_context)
 
+		setUserId(getUserId());
 		trackSelfDescribingEvent({
 			event: {
 				schema: 'iglu:com.bookshop/product_action/jsonschema/1-0-0',
