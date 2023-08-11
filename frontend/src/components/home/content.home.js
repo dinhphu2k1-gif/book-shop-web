@@ -79,6 +79,24 @@ class ContentHome extends Component {
 	};
 
 	trackingViewCategory(category) {
+		let user_id = storeConfig.getUser() == null ? null : storeConfig.getUser().id
+		let user_name = storeConfig.getUser() == null ? null : storeConfig.getUser().username
+		let phone_number = storeConfig.getUser() == null ? null : storeConfig.getUser().phone_number
+		let email = storeConfig.getUser() == null ? null : storeConfig.getUser().email
+		let address = storeConfig.getUser() == null ? null : storeConfig.getUser().address
+
+		// context
+		let user_context = {
+			schema: "iglu:com.bookshop/user_context/jsonschema/1-0-0",
+			data: {
+				user_id: user_id,
+				user_name: user_name,
+				phone_number: phone_number,
+				email: email,
+				address: address
+			}
+		}
+		
 		trackSelfDescribingEvent({
 			event: {
 				schema: 'iglu:com.bookshop/search_action/jsonschema/1-0-0',
@@ -86,7 +104,8 @@ class ContentHome extends Component {
 					action: "search_category",
 					search_value: category.name,
 				}
-			}
+			}, 
+			context: [user_context]
 		})
 	}
 

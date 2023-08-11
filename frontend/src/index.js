@@ -65,6 +65,7 @@ let user_context = {
     }
 }
 
+// window.location.reload()
 window.localStorage.setItem("user_context", user_context);
 
 const COLLECTOR_HOST = process.env.REACT_APP_COLLECTOR_HOST || 'localhost'
@@ -90,7 +91,7 @@ newTracker("book-shop-tracker", `http://${COLLECTOR_HOST}:8080`, {
     },
 
     plugins: [
-        LinkClickTrackingPlugin(),
+        // LinkClickTrackingPlugin(),
         BrowserFeaturesPlugin(),
         FormTrackingPlugin(),
         EcommercePlugin()
@@ -98,9 +99,11 @@ newTracker("book-shop-tracker", `http://${COLLECTOR_HOST}:8080`, {
 
 })
 
-setUserId(getUserId());
+console.log("user id: ", storeConfig.getUserId());
+setUserId(user_id);
 
-addGlobalContexts([user_context]);
+
+// addGlobalContexts([user_context]);
 
 enableLinkClickTracking();
 enableActivityTracking({

@@ -116,7 +116,7 @@ class RandomEvent extends React.Component {
             }
 
 
-            addGlobalContexts([user_context])
+            // addGlobalContexts([user_context])
             trackSelfDescribingEvent({
                 event: {
                     schema: 'iglu:com.bookshop/product_action/jsonschema/1-0-0',
@@ -126,7 +126,7 @@ class RandomEvent extends React.Component {
                 },
                 context: [product_context, user_context]
             })
-            removeGlobalContexts([user_context])
+            // removeGlobalContexts([user_context])
         }
     }
 

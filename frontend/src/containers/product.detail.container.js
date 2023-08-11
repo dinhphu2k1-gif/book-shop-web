@@ -55,6 +55,25 @@ class ProductDetailContainer extends Component {
             }
         }
 
+
+        let user_id = storeConfig.getUser() == null ? null : storeConfig.getUser().id
+		let user_name = storeConfig.getUser() == null ? null : storeConfig.getUser().username
+		let phone_number = storeConfig.getUser() == null ? null : storeConfig.getUser().phone_number
+		let email = storeConfig.getUser() == null ? null : storeConfig.getUser().email
+		let address = storeConfig.getUser() == null ? null : storeConfig.getUser().address
+
+		// context
+		let user_context = {
+			schema: "iglu:com.bookshop/user_context/jsonschema/1-0-0",
+			data: {
+				user_id: user_id,
+				user_name: user_name,
+				phone_number: phone_number,
+				email: email,
+				address: address
+			}
+		}
+
         trackSelfDescribingEvent({
             event: {
                 schema: 'iglu:com.bookshop/product_action/jsonschema/1-0-0',
@@ -62,7 +81,7 @@ class ProductDetailContainer extends Component {
                     action: "add"
                 }
             },
-            context: [product_context]
+            context: [product_context, user_context]
         })
 
         // add product to cart
@@ -88,6 +107,25 @@ class ProductDetailContainer extends Component {
             }
         }
 
+
+        let user_id1 = storeConfig.getUser() == null ? null : storeConfig.getUser().id
+		let user_name = storeConfig.getUser() == null ? null : storeConfig.getUser().username
+		let phone_number = storeConfig.getUser() == null ? null : storeConfig.getUser().phone_number
+		let email = storeConfig.getUser() == null ? null : storeConfig.getUser().email
+		let address = storeConfig.getUser() == null ? null : storeConfig.getUser().address
+
+		// context
+		let user_context = {
+			schema: "iglu:com.bookshop/user_context/jsonschema/1-0-0",
+			data: {
+				user_id: user_id1,
+				user_name: user_name,
+				phone_number: phone_number,
+				email: email,
+				address: address
+			}
+		}
+
         trackSelfDescribingEvent({
             event: {
                 schema: 'iglu:com.bookshop/product_action/jsonschema/1-0-0',
@@ -96,7 +134,7 @@ class ProductDetailContainer extends Component {
                     extra: comment
                 }
             },
-            context: [product_context]
+            context: [product_context, user_context]
         })
 
         this.props.productActions.submitComment(user_id, comment, id)

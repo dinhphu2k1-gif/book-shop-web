@@ -21,7 +21,7 @@ exports.setUser = (user) => {
     localStorage.setItem('user', JSON.stringify(user))
 }
 exports.getUser = () => {
-    // console.log("user", localStorage)
+    // console.log("user id:", localStorage)
     if (localStorage.getItem('user') === undefined) {
         return null
     }
@@ -39,9 +39,11 @@ exports.setUserId = (userId) => {
     localStorage.setItem('user_id', userId)
 }
 exports.getUserId = () => {
-    if (localStorage.getItem('user_id') === null)
+    try {
+        return localStorage.getItem('user_id')
+    } catch (error) {
         return null
-    return localStorage.getItem('user_id')
+    }
 }
 
 exports.clear = () => {

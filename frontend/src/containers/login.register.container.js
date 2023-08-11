@@ -7,6 +7,13 @@ import * as userActions from '../actions/user.action'
 import * as homeActions from '../actions/home.action'
 import { BACKEND_PORT } from '../config/application.config'
 import jwt_decode from 'jwt-decode'
+import storeConfig from '../config/storage.config'
+
+import {
+    setUserId
+}
+    from '@snowplow/browser-tracker';
+
 require('dotenv').config();
 
 const BACKEND_HOST = process.env.REACT_APP_BACKEND_HOST || 'localhost'
@@ -28,6 +35,7 @@ class LoginRegisterContainer extends Component {
 
         }
     }
+
     componentWillMount() {
         this.props.actions.auth()
     }
@@ -135,12 +143,14 @@ class LoginRegisterContainer extends Component {
         }
         var decodedToken = jwt_decode(res.data.data.token);
         this.props.actions.loginSuccess(res.data.data.token, decodedToken.user_id)
-        this.props.history.push('/')
         if(localStorage.getItem("location") !== null){
             const path = localStorage.getItem("location")
             localStorage.setItem("location", null)
             window.location.href = path
         }
+        
+        setUserId(storeConfig.getUserId());
+        this.props.history.push('/')
     }
     render() {
         return (
