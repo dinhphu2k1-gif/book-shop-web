@@ -7,9 +7,11 @@ import * as homeActions from '../actions/home.action'
 import * as userActions from '../actions/user.action'
 import Loading from '../components/loading/loading'
 import storeConfig from "../config/storage.config"
+import { getUserId } from '../config/storage.config'
 
 // snowplow tracking
 import { trackSelfDescribingEvent } from '@snowplow/browser-tracker';
+import { setUserId } from '@snowplow/browser-tracker'
 
 class ProductDetailContainer extends Component {
     constructor(props) {
@@ -106,25 +108,6 @@ class ProductDetailContainer extends Component {
                 author_id: author.id
             }
         }
-
-
-        let user_id1 = storeConfig.getUser() == null ? null : storeConfig.getUser().id
-		let user_name = storeConfig.getUser() == null ? null : storeConfig.getUser().username
-		let phone_number = storeConfig.getUser() == null ? null : storeConfig.getUser().phone_number
-		let email = storeConfig.getUser() == null ? null : storeConfig.getUser().email
-		let address = storeConfig.getUser() == null ? null : storeConfig.getUser().address
-
-		// context
-		let user_context = {
-			schema: "iglu:com.bookshop/user_context/jsonschema/1-0-0",
-			data: {
-				user_id: user_id1,
-				user_name: user_name,
-				phone_number: phone_number,
-				email: email,
-				address: address
-			}
-		}
 
         trackSelfDescribingEvent({
             event: {

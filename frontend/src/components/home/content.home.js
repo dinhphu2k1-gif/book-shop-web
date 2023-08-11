@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import ProductItem from "./product.item";
 import { Link } from "react-router-dom";
 import storeConfig from "../../config/storage.config"
+import { getUserId } from "../../config/storage.config";
 
 // snowplow tracking
 import { trackSelfDescribingEvent } from '@snowplow/browser-tracker';
+import { setUserId } from "@snowplow/browser-tracker";
 
 class ContentHome extends Component {
 	constructor(props) {

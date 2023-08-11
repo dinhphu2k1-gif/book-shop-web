@@ -11,9 +11,11 @@ import { sortTypes } from '../constants/action.types'
 import localStore from '../config/storage.config'
 import storeConfig from "../config/storage.config"
 import homeReducer from '../reducers/home.reducer'
+import { getUserId } from '../config/storage.config'
 
 // snowplow tracking
 import { trackSelfDescribingEvent } from '@snowplow/browser-tracker';
+import { setUserId } from '@snowplow/browser-tracker'
 
 const { createStore } = require('redux');
 const store = createStore(homeReducer);
@@ -60,6 +62,7 @@ class HomeContainer extends React.Component {
 
         let searchText = this.props.homeActions.getSearchText();
         if (searchText.length != 0) {
+            setUserId(getUserId());
             trackSelfDescribingEvent({
                 event: {
                     schema: 'iglu:com.bookshop/search_action/jsonschema/1-0-0',
@@ -95,6 +98,7 @@ class HomeContainer extends React.Component {
 
         this.props.homeActions.setRangeType(range)
 
+        setUserId(getUserId());
         trackSelfDescribingEvent({
             event: {
                 schema: 'iglu:com.bookshop/search_action/jsonschema/1-0-0',
