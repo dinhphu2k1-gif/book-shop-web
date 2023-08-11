@@ -125,7 +125,7 @@ class RandomEvent extends React.Component {
                         action: action[index_action]
                     }
                 },
-                context: [product_context]
+                context: [product_context, user_context]
             })
             // removeGlobalContexts([user_context])
         }
